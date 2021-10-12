@@ -15,7 +15,7 @@ class CreateUsersActividad extends Migration
     {
         Schema::create('users_actividad', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id','fk_users_actividad_users')->constrained('users');
             $table->string('accion',65)->nullable()->default(null);
             $table->string('descripcion',200)->nullable()->default(null);
             $table->text('detalles')->nullable()->default(null);

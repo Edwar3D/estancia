@@ -15,7 +15,7 @@ class CreateTblLogsErrorSystem extends Migration
     {
         Schema::create('tbl_logs_error_system', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id','fk_logs_error_system_users')->constrained('users');
             $table->string('tipo_error',120)->nullable()->default(null);
             $table->longText('descripcion')->nullable()->default(null);
             $table->timestamps();

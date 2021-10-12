@@ -22,5 +22,5 @@
       <!-- /.row (main row) -->
 
     </section>
-    <!-- /.content --> 
+    <!-- /.content -->
 @endsection

@@ -15,8 +15,8 @@ class CreateUsersAccesos extends Migration
     {
         Schema::create('users_accesos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->integer('dependencia_id');
+            $table->foreignId('user_id','fk_users_actividad_users')->constrained('users');
+            $table->foreignId('dependencia_id','fk_users_accesos_tblc_dependencias')->constrained('tblc_dependencias');
             $table->text('agente')->nullable()->default(null);
             $table->string('ip_address',45)->nullable()->default(null);
             $table->string('comentario',120)->nullable()->default(null);
