@@ -16,15 +16,15 @@ class AddOtherAttributesToUsers extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('nombres',120)->nullable();
             $table->string('apellidos',45)->nullable();
-            /* $table->unsignedBigInteger('dependencia_id')->nullable(); */
-            $table->foreignId('dependencia_id','fk_users_tblc_dependencias')->constrained('tblc_dependencias');
+            $table->unsignedBigInteger('dependencia_id')->nullable();
+           /*  $table->foreignId('dependencia_id','fk_users_tblc_dependencias')->constrained('tblc_dependencias'); */
             $table->string('area_laboral',45)->nullable();
             $table->longText('img_avatar')->nullable();
             $table->integer('is_admin')->nullable()->default(0);
-            /* $table->unsignedBigInteger('user_created')->nullable();
-            $table->unsignedBigInteger('user_update')->nullable(); */
-            $table->foreignId('user_created','fk_users_users')->constrained('users');
-            $table->foreignId('user_update','fk_users_users2')->constrained('users');
+            $table->unsignedBigInteger('user_created')->nullable();
+            $table->unsignedBigInteger('user_update')->nullable();
+           /*  $table->foreignId('user_created','fk_users_users')->constrained('users');
+            $table->foreignId('user_update','fk_users_users2')->constrained('users'); */
             $table->integer('estatus_is')->default(0);
         });
     }

@@ -11,7 +11,7 @@
                 <strong>{{ $errors->first('username') }}</strong>
             </span>
         @endif
-        
+
       </div>
       <div class="form-group has-feedback">
 
@@ -22,7 +22,7 @@
                 <strong>{{ $errors->first('password') }}</strong>
             </span>
         @endif
-        
+
       </div>
       <div class="row">
         <div class="col-xs-12">
@@ -30,4 +30,6 @@
         </div>
       </div>
     </form>
+    <br>
+    <a href="{{ route('register') }}">Registarse</a>
 @endsection
