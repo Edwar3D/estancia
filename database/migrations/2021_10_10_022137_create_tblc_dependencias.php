@@ -18,6 +18,11 @@ class CreateTblcDependencias extends Migration
             $table->string('dependencia',180)->nullable();
             $table->string('parentid',45)->nullable();
             $table->integer('nivel')->nullable();
+            $table->string('unidad_administrativa')->nullable();
+            $table->string('direccion',255)->nullable();
+            $table->string('responsable',200)->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

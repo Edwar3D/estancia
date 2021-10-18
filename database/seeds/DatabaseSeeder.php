@@ -14,5 +14,7 @@ class DatabaseSeeder extends Seeder
          $this->call(tbl_menusSeeder::class);
          $this->call(usersSeeder::class);
          $this->call(users_menusSeeder::class);
+         $this->call(tblc_dependenciasSeeder::class);
+         $this->call(tbl_inspectoresSeeder::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\V1;
 
+use App\Inspector;
 use Illuminate\Database\Eloquent\Model;
 
 class Dependencia extends Model
@@ -12,12 +13,12 @@ class Dependencia extends Model
     protected $table = 'tblc_dependencias';
 
     protected $fillable = [
-        "id", 
-        "dependencia", 
-        "parentid", 
+        "id",
+        "dependencia",
+        "parentid",
         "nivel"
     ];
-   
+
 
 
     public function dependencias()
@@ -25,8 +26,12 @@ class Dependencia extends Model
         return $this->hasMany(Usuario::class);
     }
 
+    public function inspectores()
+    {
+        return $this->hasMany(Inspector::class);
+    }
 
-     public function reportes()
+    /*  public function reportes()
     {
         return $this->hasMany(Reportes::class);
     }
@@ -34,5 +39,5 @@ class Dependencia extends Model
     public function servicios()
     {
         return $this->hasMany(Servicios::class);
-    }
+    } */
 }

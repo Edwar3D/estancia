@@ -20,11 +20,12 @@ class CreateInspectorsTable extends Migration
             $table->integer('cargo');
             $table->string('jefe',250);/*diferente del encargado de dependencia?*/
             $table->string('telefono',45);
-            $table->string('mail');
+            $table->string('email');
             $table->integer('estado_actual')->default(0);
             $table->longText('foto');/*como se guarda */
-            $table->text('area_administrativa')->nullable();/*si son textos*/
+            $table->String('area_administrativa')->nullable();/*si son textos*/
             $table->text('fundamentos_juridicos')->nullable();
+            $table->text('origen_inspeccion')->nullable();
             $table->foreignId('dependencia_id','fk_inspentores_tblc_dependencias')->constrained('tblc_dependencias');
             $table->timestamps();
         });
