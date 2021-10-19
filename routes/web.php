@@ -48,6 +48,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/ciudadano', 'ciudadanoController@index')->name('ciudadano');
+Route::get('/ciudadano2', 'ciudadanoController@index2')->name('ciudadano2');
 Route::get('/ciudadano/selectDependencia/{id?}', 'ciudadanoController@selectDependencia')->name('ciudadano.selectDependencia');
 Route::get('/ciudadano/inspector/{id?}', 'ciudadanoController@showInspector')->name('ciudadano.verInspector');
 Route::get('/ciudadano/search', 'CiudadanoController@searchInspector')->name('ciudadano.searchInspector');

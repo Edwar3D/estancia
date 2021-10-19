@@ -1,5 +1,5 @@
 <div class="px-3 pb-3 container border rounded ">
-    <h2 class="h2 text-center my-2">{{$dependencia->dependencia}}</h2>
+    <h2 class="h2 text-center my-2">{{$dependencia->dependencia ?? ''}}</h2>
     <div class="row">
         <div class="col-4">
             <div class="card">
@@ -8,13 +8,16 @@
                     <div class="form-group row">
                         <span class="col-sm-5 col-form-label">Cargo:</span>
                         <span class="col-sm-7 col-form-label text-center">
-                            @if ($inspector->cargo === 0)
-                                Inspector
-                            @elseif ($inspector->cargo === 1)
-                                Verificador
-                            @else
-                                Supervisor
+                            @if ($inspector)
+                                @if ($inspector->cargo === 0)
+                                    Inspector
+                                @elseif ($inspector->cargo === 1)
+                                    Verificador
+                                @else
+                                    Supervisor
+                                @endif
                             @endif
+
                         </span>
                     </div>
                     <h5 class="card-title text-center col-12">{{!empty($inspector->nombre) ? $inspector->nombre:''}}</h5>
