@@ -17,7 +17,7 @@ class CreateOrdensTable extends Migration
             $table->id();
             $table->string('folio',7)->unique();
             $table->integer('tipo');
-            $table->string('dirreccion',250);
+            $table->string('direccion',250);
             $table->integer('zona');
             $table->string('archivo');
             $table->integer('estado_actual');
