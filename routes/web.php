@@ -49,4 +49,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/ciudadano', 'ciudadanoController@index')->name('ciudadano');
-Route::get('/ciudadano/inspector/{id?}', 'ciudadanoController@showInspector')->name('ciudadano.verInspector');
+Route::get('/ciudadano/inspector/{id?}', 'ciudadanoController@viewInspector')->name('ciudadano.verInspector');
