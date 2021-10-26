@@ -8,8 +8,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-hover table-striped ">
-                    <thead>
+                @if ( sizeof($ordenes) != 0)
+                <table class="table table-sm table-hover table-striped">
+                    <thead  class="bg-green-custom">
                         <tr>
                             <th scope="col">Fecha</th>
                             <th scope="col">Dirección</th>
@@ -29,6 +30,10 @@
 
                     </tbody>
                 </table>
+                @else
+                    <p class="text-center">No hay inspeciones todavia</p>
+                @endif
+
 
             </div>
             <div class="modal-footer">

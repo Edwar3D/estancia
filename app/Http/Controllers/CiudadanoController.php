@@ -16,14 +16,6 @@ class CiudadanoController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function showInspector($id)
-    {
-        $inspector = Inspector::find($id);
-        $dependencia = Dependencia::find($inspector->dependencia_id);
-        return view('usuarios.ciudadano.view_inspector',['inspector'=>$inspector,'dependencia'=>$dependencia]);
-    }
-
-
     public function index(Request $request){
         $options = DB::table('tblc_dependencias')->get();
         if($request['select_dependencia'] =='' && $request['search']==''){
@@ -48,10 +40,10 @@ class CiudadanoController extends Controller
             $inspector = [];
             $dependencia = [];
         }
-
+        $count = sizeof($inspectores);
         $inspectores->withPath("/ciudadano?select_dependencia={$request['select_dependencia']}&search={$request['search']}");
 
-        return view('layouts.ciudadano',compact('options','inspectores','dependencias','inspector','dependencia','request'));
+        return view('layouts.ciudadano',compact('options','inspectores','dependencias','inspector','dependencia','request','count'));
     }
 
 

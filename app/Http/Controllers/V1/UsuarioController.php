@@ -27,11 +27,11 @@ class UsuarioController extends Controller
             $response=[
                 'success'=> true,
                 'html' => view('usuarios.data.list-tabla',compact('datosTabla'))->render()
-            ]; 
+            ];
             //dd($datosTabla);
             return response()->json($response);
         }
-        
+
     }
 
     /**
@@ -57,7 +57,7 @@ class UsuarioController extends Controller
         //
         try {
             $obj_tabla = new Usuario;
-            
+
             $obj_tabla->username = $request["username"];
             $obj_tabla->email = $request["username"];
             $obj_tabla->password = bcrypt($request["password"]);
@@ -74,7 +74,7 @@ class UsuarioController extends Controller
             $obj_tabla->updated_at =  date('Y-m-d H:i:s');
             $obj_tabla->user_updated=Auth::user()->id;
             $obj_tabla->estatus_id =  1;
-    
+
             $obj_tabla->save();
             $message = 'Almacenado con éxito';
         return ['success' => true,'message' => $message];
@@ -124,7 +124,7 @@ class UsuarioController extends Controller
         try {
             $obj_tabla = Usuario::find($id);
 
-            
+
             $obj_tabla->nombres = $request["nombre"];
             $obj_tabla->apellidos = $request["apellidos"];
             $obj_tabla->dependencia_id = $request["dependencia_id"];
@@ -138,7 +138,7 @@ class UsuarioController extends Controller
             $obj_tabla->celular = $request["celular"];
             $obj_tabla->updated_at =  date('Y-m-d H:i:s');
             $obj_tabla->user_updated=Auth::user()->id;
-    
+
             $obj_tabla->save();
             $message = 'Almacenado con éxito';
         return ['success' => true,'message' => $message];
@@ -165,7 +165,7 @@ class UsuarioController extends Controller
                 $obj_tabla->estatus_id = 2;
                 $obj_tabla->updated_at =  date('Y-m-d H:i:s');
                 $obj_tabla->user_updated=Auth::user()->id;
-        
+
                 $obj_tabla->save();
                 $message = 'Usuario Eliminado';
             return ['success' => true,'message' => $message];
