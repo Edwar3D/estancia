@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card col-md-9 col-sm-8 ">
+            <div class="card col-md-9 col-sm-12 ">
                 <h5 class="card-header text-center font-weight-bold">{{ $dependencia->dependencia ?? '' }}</h5>
                 <div class="card-body">
                     <dl class="row h-100 pt-md-2 pt-sm-0">

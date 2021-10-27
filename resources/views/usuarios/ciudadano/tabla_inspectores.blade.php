@@ -26,12 +26,7 @@
                             @foreach ($inspectores as $inspect)
                                 <tr class="filas ">
                                     <th>
-                                        {{-- <a type="button" class="btn font-weight-bold" data-toggle="modal" data-target="#inspectorModal{{ $inspect->id }}">
-                                        {{ $inspect->nombre }}
-                                    </a>
-                                    <!-- Modal -->
-                                    <x-modal-inspector idInspector="{{ $inspect->id }}"/> --}}
-                                        <a href="{{ route('ciudadano.verInspector', [$inspect->id]) }}">
+                                        <a class="font-weight-blod text-dark" href="{{ route('ciudadano.verInspector', [$inspect->id]) }}">
                                             {{ $inspect->nombre }}
                                         </a>
                                     </th>

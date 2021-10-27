@@ -22,9 +22,9 @@ class usersSeeder extends Seeder
             'nombres'=>'nombre1 nombre2',
             'apellidos' =>'apellido1 apellido2',
             'area_labora' =>'comunicación',
-            'dependencia_id'=>1,
-            'user_created'=>1,
-            'user_update'=>1
+            'dependencia_id'=>0,
+            'user_created'=>0,
+            'user_update'=>0
         ]);
     }
 }
