@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\V1\Dependencia;
+use App\Models\V1\FundamentoJuridico;
 use Illuminate\Database\Seeder;
 
-class tblc_dependenciasSeeder extends Seeder
+class tbl_fundamentos extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class tblc_dependenciasSeeder extends Seeder
      */
     public function run()
     {
-         $Comment= factory(Dependencia::class, 10)->create();
+        factory(FundamentoJuridico::class, 10)->create();
     }
 }

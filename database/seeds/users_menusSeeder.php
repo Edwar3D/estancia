@@ -22,5 +22,10 @@ class users_menusSeeder extends Seeder
             'menu_id'=>2,
             'user_created'=>1,
         ]);
+        DB::table('users_menus')->insert([
+            'user_id'=>1,
+            'menu_id'=>3,
+            'user_created'=>1,
+        ]);
     }
 }

@@ -15,7 +15,7 @@ class CreateTblOrigenesInspeccionInspectores extends Migration
     {
         Schema::create('tbl_origenes_inspeccion_inspectores', function (Blueprint $table) {
             $table->foreignId('origen_id','fk_tbl_origenes_inspeccion_inspectores_tbl_origenes')->constrained('tbl_origenes_inspeccion');
-            $table->foreignId('inspecctor_id','fk_tbl_origenes_inspeccion_inspectores_tbl_inspector')->constrained('tbl_inspectores');
+            $table->foreignId('inspector_id','fk_tbl_origenes_inspeccion_inspectores_tbl_inspector')->constrained('tbl_inspectores');
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class CreateInspectorsTable extends Migration
     {
         Schema::create('tbl_cargos', function (Blueprint $table) {
             $table->id();
-            $table->integer('cargo');
+            $table->string('cargo');
             $table->timestamps();
         });
         Schema::create('tbl_inspectores', function (Blueprint $table) {

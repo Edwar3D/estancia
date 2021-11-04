@@ -19,14 +19,14 @@ class CreateTblcDependencias extends Migration
             $table->string('dependencia',180)->nullable();
             $table->string('responsable',200)->nullable();
             $table->string('direccion',255)->nullable();
-            $table->integer('telefono')->nullable();
+            $table->string('telefono')->nullable();
             $table->string('ext')->nullable();
             $table->string('email')->nullablfke();
             $table->integer('subdependencia')->nullable();
-            $table->foreignId('parent_id','fk_tblc_dependencias_tblc_dependencias1_idx')->default(0)->constrained('tblc_dependencias')->onDelete('cascade');
+            $table->foreignId('parent_id','fk_tblc_dependencias_tblc_dependencias1_idx')->nullable()->constrained('tblc_dependencias')->onDelete('cascade');
             $table->integer('nivel')->nullable();
             $table->foreignId('user_created','fk_tblc_dependencias_users')->default(0)->constrained('users');
-            $table->foreignId('user_update','fk_tblc_dependencias_users2')->default(0)->constrained('users');
+            $table->foreignId('user_updated','fk_tblc_dependencias_users2')->default(0)->constrained('users');
             $table->timestamps();
         });
     }

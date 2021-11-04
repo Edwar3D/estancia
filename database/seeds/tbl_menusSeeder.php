@@ -12,15 +12,23 @@ class tbl_menusSeeder extends Seeder
     public function run()
     {
         DB::table('tbl_menus')->insert([
-            'menu' => 'menu1',
-            'clave' => 'clave',
+            'menu' => 'Dependencias',
+            'clave' => '',
             'estatus' => 1,
             'sub_menu' => 0,
             'orden' =>1,
         ]);
         DB::table('tbl_menus')->insert([
-            'menu' => 'submenu1',
-            'clave' => 'clave2',
+            'menu' => 'Crear',
+            'clave' => 'dependencias/create',
+            'estatus' => 1,
+            'sub_menu' => 1,
+            'parentid' => 1,
+            'orden' =>1,
+        ]);
+        DB::table('tbl_menus')->insert([
+            'menu' => 'lista',
+            'clave' => 'dependencias',
             'estatus' => 1,
             'sub_menu' => 1,
             'parentid' => 1,

@@ -14,7 +14,7 @@ class usersSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'username' => 'soy Prueba',
+            'username' => 'Admin',
             'email' => 'soyprueba@ejemplo.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$fUSO2YiqGHwheEx.JRzFCOSw109.XKat283e7idMfVifhpuIj/0PG', // prueba123
@@ -22,9 +22,10 @@ class usersSeeder extends Seeder
             'nombres'=>'nombre1 nombre2',
             'apellidos' =>'apellido1 apellido2',
             'area_labora' =>'comunicación',
-            'dependencia_id'=>0,
-            'user_created'=>0,
-            'user_update'=>0
+            'dependencia_id'=>null,
+            'user_created'=>null,
+            'user_update'=>null,
+            'is_admin'=>1
         ]);
     }
 }

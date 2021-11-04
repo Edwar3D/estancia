@@ -8,12 +8,15 @@ use Faker\Generator as Faker;
 $factory->define(Dependencia::class, function (Faker $faker) {
     return [
         'dependencia'=>$faker->word(),
-        'parentid'=>'parentid',
-        'nivel'=>$faker->randomDigitNot(0),
         'responsable'=>$faker->name(),
-        'unidad_administrativa'=>$faker->randomElement(['unidad A','unidad C','unidad C']),
         'direccion'=>$faker->address(),
-        'email'=>$faker->email(),
         'telefono'=>$faker->phoneNumber(),
+        'ext'=>$faker->buildingNumber(),
+        'email'=>$faker->email(),
+        'subdependencia'=>0,
+        'parent_id'=>null,
+        'nivel'=>$faker->randomDigitNot(0),
+        'user_created'=>1,
+        'user_updated'=>1
     ];
 });

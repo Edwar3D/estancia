@@ -11,11 +11,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-     /*    $this->call(tbl_menusSeeder::class);
+        //USUARIO ADMIN Y MENUS
+        $this->call(usersSeeder::class);
+        $this->call(tbl_menusSeeder::class);
+        $this->call(users_menusSeeder::class);
+
+        //DATOS DE DEPENDENCIAS
         $this->call(tblc_dependenciasSeeder::class);
+
+        ///DATOS DE INSPECTORES
+        $this->call(tbl_cargos::class);
+        $this->call(tbl_fundamentos::class);
+        $this->call(tbl_origenesSeeder::class);
         $this->call(tbl_inspectoresSeeder::class);
-        $this->call(tbl_ordenesSeeder::class); */
-        $this->call(usersSeeder::class);/*
-        $this->call(users_menusSeeder::class); */
+
+        //Ordenes
+        $this->call(tbl_zonasSeeder::class);
+        $this->call(tbl_ordenesSeeder::class);
+
     }
 }

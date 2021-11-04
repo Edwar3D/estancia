@@ -9,7 +9,7 @@ class Usuario extends Model
     //
     protected $table = 'users';
 
-    protected $fillable = ['username','email', 'nombre', 'apellidos', 'tel_oficina','extensiones','celular','created_at','updated_at','updated_at','updated_at','estatus_id'];
+    protected $fillable = ['username','email', 'nombres', 'apellidos', 'created_at','updated_at','updated_at','updated_at','estatus_id'];
 
     public function estatus()
     {

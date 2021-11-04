@@ -31,7 +31,6 @@ class UsuarioController extends Controller
             //dd($datosTabla);
             return response()->json($response);
         }
-
     }
 
     /**

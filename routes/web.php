@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,11 @@ Route::group(['middleware'=>'auth'], function () {
         'index', 'create','show','store','edit','update','destroy'
     ]);
 
+    Route::resource('dependencias', V1\DependenciaController::class)->only([
+        'index', 'create','show','store','edit','update','destroy'
+    ]);
+
+
     Route::resource('privilegios', V1\PrivilegioController::class)->only([
         'edit','update'
     ]);
@@ -50,3 +56,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/ciudadano', 'ciudadanoController@index')->name('ciudadano');
 Route::get('/ciudadano/inspector/{id?}', 'ciudadanoController@viewInspector')->name('ciudadano.verInspector');
+

@@ -26,7 +26,6 @@ class CreateOrdensTable extends Migration
         Schema::create('tbl_ordenes', function (Blueprint $table) {
             $table->id();
             $table->string('folio',7)->unique();
-            $table->integer('tipo');
             $table->string('direccion',250);
             $table->string('archivo');
             $table->integer('estado_actual');
@@ -36,7 +35,7 @@ class CreateOrdensTable extends Migration
             $table->foreignId('inspector_id','fk_tbl_ordenes_tbl_inspectores')->constrained('tbl_inspectores');
             $table->foreignId('dependencia_id','fk_tbl_ordenes_tblc_dependencias')->constrained('tblc_dependencias');
             $table->foreignId('user_created','fk_tbl_ordenes_users')->default(0)->constrained('users');
-            $table->foreignId('user_update','fk_tbl_ordenes_users2')->default(0)->constrained('users');
+            $table->foreignId('user_updated','fk_tbl_ordenes_users2')->default(0)->constrained('users');
 
             $table->timestamps();
         });
