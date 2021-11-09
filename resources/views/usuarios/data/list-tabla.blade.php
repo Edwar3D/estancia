@@ -17,14 +17,15 @@
         </thead>
 
         <tbody>
-        <tr>   
+        <tr>
             <td colspan="9" style="text-align: center;"> Sin resultados </td>
         </tr>
         </tbody>
-        
+
     </table>
 
 @else
+
     <p> Mostrando registros del {{ $datosTabla->firstItem() }} al {{ $datosTabla->lastItem() }} de un total de {{ $datosTabla->total() }} registros </p>
     <table class="table table-bordered table-striped datatable">
         <thead>
@@ -35,11 +36,12 @@
                 <th>Apellidos</th>
                 <th>Dependencia</th>
                 <th>Area que labora</th>
-                <th>Tel. Oficina</th>
+                <th>Fecha Captura</th>
+                {{-- <th>Tel. Oficina</th>
                 <th>Extension(es)</th>
                 <th>Celular</th>
-                <th>Fecha Captura</th>
-                <th>Estatus</th>
+
+                <th>Estatus</th> --}}
                 <th></th>
             </tr>
         </thead>
@@ -47,18 +49,18 @@
         <tbody>
              @foreach($datosTabla as $datoActual)
                 <tr>
-                
+
                     <td> {{$loop->iteration}} </td>
                     <td> {{$datoActual->username}} </td>
                     <td> {{$datoActual->nombres}}  </td>
                     <td> {{$datoActual->apellidos}}</td>
-                    <td> {{$datoActual->dependencias->dependencia}} </td>
+                    @if ($datoActual->dependencia)
+                    <td> {{$datoActual->dependencia->dependencia}} </td>
+                    @else
+                        <td>No encontrado</td>
+                    @endif
                     <td> {{$datoActual->area_labora}}</td>
-                    <td> {{$datoActual->tel_oficina}}</td>
-                    <td> {{$datoActual->extensiones}}</td>
-                    <td> {{$datoActual->celular}} </td>
                     <td> {{$datoActual->created_at}} </td>
-                    <td> {{$datoActual->estatus->estatus}} </td>
                     <td style="text-align: center;">
                         <div class="btn-group">
                             <button type="button" class="btn btn-success">Acciones</button>
@@ -76,7 +78,9 @@
                 </tr>
                 @endforeach
         </tbody>
-        
+
     </table>
      {{$datosTabla->links()}}
 @endunless
+
+

@@ -31,13 +31,7 @@
                                         </a>
                                     </th>
                                     <td>
-                                        @if ($inspect->cargo === 0)
-                                            Inspector
-                                        @elseif ($inspect->cargo === 1)
-                                            Verificador
-                                        @else
-                                            Supervisor
-                                        @endif
+                                        {{$inspect->cargo->cargo ?? ''}}
                                     </td>
                                     <td>
                                         @foreach ($dependencias as $item)

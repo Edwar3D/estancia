@@ -24,13 +24,7 @@
                             <span class="col-sm-12 col-form-label text-center">
                                 Cargo:
                                 @if ($inspector)
-                                    @if ($inspector->cargo === 0)
-                                        Inspector
-                                    @elseif ($inspector->cargo === 1)
-                                        Verificador
-                                    @else
-                                        Supervisor
-                                    @endif
+                                    {{ $inspector->cargo->cargo ?? 'No encontrado' }}
                                 @endif
                             </span>
                         </div>

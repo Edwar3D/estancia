@@ -20,7 +20,7 @@ class CiudadanoController extends Controller
         $options = DB::table('tblc_dependencias')->get();
         if($request['select_dependencia'] =='' && $request['search']==''){
             $dependencias = $options;
-            $inspectores = Inspector::paginate(10);
+            $inspectores = Inspector::with('cargo')->paginate(10);
         }else if($request['select_dependencia'] == 0){
             $dependencias =  DB::table('tblc_dependencias')->get();
             if($request['search'] !='')

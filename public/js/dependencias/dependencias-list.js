@@ -1,5 +1,5 @@
 'use strict';
-let $datosTabla = $("#datosTabla");
+let $datosTabla=$("#datosTabla");
 
 jQuery.browser = {};
 (function () {
@@ -88,14 +88,14 @@ jQuery.browser = {};
     }
 }*/
 
-$(document).ready(function () {
+$(document).ready(function(){
 
     get_datosTablaIni();
-    $('body').on('click', '.pagination a', function (e) {
+    $('body').on('click', '.pagination a', function(e) {
         e.preventDefault();
 
         var url = $(this).attr('href');
-        var page = $(this).attr('href').split('page=')[1];
+       var page=$(this).attr('href').split('page=')[1];
         get_datosTabla(page);
         window.history.pushState("", "", url);
     });
@@ -116,67 +116,67 @@ $(document).ready(function () {
 });
 
 function get_datosTabla(page) {
-    $.ajax({
-        url: 'usuarios/?act=list&page=' + page,
-        type: "GET", //GET,POST,PUT,DELETE
-        dateType: 'json',
-        //data:$formFiltro.serialize()
-        data: { sid: Math.random() }
+            $.ajax({
+                url:'dependencias/?act=list&page='+page,
+                type: "GET", //GET,POST,PUT,DELETE
+                dateType:'json',
+                //data:$formFiltro.serialize()
+                data:{sid:Math.random()}
 
-    })
-        .done(function (response) {
-            if (response.success == true) {
-                $datosTabla.html(response.html);
-            }
-        }).fail(function (jqXHR, textStatus, error) {
-            console.log("Post error: " + error);
-        });
+            })
+            .done(function(response){
+                if(response.success==true){
+                    $datosTabla.html(response.html);
+                }
+            }).fail(function (jqXHR, textStatus, error) {
+                console.log("Post error: " + error);
+            });
 }
 
 function get_datosTablaIni() {
-    //loader("block");
-    $.ajax({
-        url: 'usuarios/?act=list',
-        type: "GET",//GET,POST,PUT,DELETE
-        dateType: 'json',
-        data: { sid: Math.random() }
-    })
-        .done(function (response) {
-            if (response.success == true) {
-                $datosTabla.html(response.html);
-            }
-        }).fail(function (jqXHR, textStatus, error) {
-            console.log("Post error: " + error);
-        });
+  //loader("block");
+            $.ajax({
+                url:'dependencias/?act=list',
+                type: "GET",//GET,POST,PUT,DELETE
+                dateType:'json',
+                data:{sid:Math.random()}
+            })
+            .done(function(response){
+                if(response.success==true){
+                    $datosTabla.html(response.html);
+                }
+            }).fail(function (jqXHR, textStatus, error) {
+                console.log("Post error: " + error);
+            });
 }
-function f_popup_info(url, title) { //Ver planilla
+function f_popup_info(url,title) { //Ver planilla
     $("#ModalTitleInfo").html(title);
     $.ajax({
-        type: "GET",
-        url: url,
-        cache: false,
-        data: { sid: Math.random() },
-        async: false,
-        success: function (datos) {
-            //alert("Datos Info"+datos);
+      type: "GET",
+      url:url,
+      cache: false,
+      data: {sid:Math.random()},
+      async:false,
+      success: function(datos){
+      //alert("Datos Info"+datos);
 
-            $("#ModalBody").html(datos);
-            //$('#ModalInfo').modal('show');
-            $('#ModalInfo').modal('toggle');
-            //alert(lat+"/"+lng)
+        $("#ModalBody").html(datos);
+        //$('#ModalInfo').modal('show');
+        $('#ModalInfo').modal('toggle');
+        //alert(lat+"/"+lng)
         },
-        timeout: 60000,
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>Intente de Nuevo ha excedido el limite de Tiempo</pre>");
-        }
+      timeout:60000,
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>Intente de Nuevo ha excedido el limite de Tiempo</pre>");
+      }
 
     });
 }
 
 
-function f_delete_row(url, title) { //Ver planilla
+function f_delete_row(url,title) { //Ver planilla
     bootbox.confirm({
-        message: "Deseas eliminar el usuario" + title + "?",
+        message: "Deseas eliminar el usuario"+ title +"?",
         buttons: {
             confirm: {
                 label: 'Si',
@@ -189,21 +189,21 @@ function f_delete_row(url, title) { //Ver planilla
         },
         callback: function (result) {
             console.log('This was logged in the callback: ' + result);
-            if (result == true) {
+            if(result==true){
                 $.ajax({
-                    url: url,
+                    url:url,
                     type: "delete",//GET,POST,PUT,DELETE
-                    dateType: 'json',
-                    data: { sid: Math.random() }
+                    dateType:'json',
+                    data:{sid:Math.random()}
                 })
-                    .done(function (response) {
-                        if (response.success == true) {
-                            get_datosTablaIni();
-                            bootbox.alert(response.message);
-                        }
-                    }).fail(function (jqXHR, textStatus, error) {
-                        console.log("Post error: " + error);
-                    });
+                .done(function(response){
+                    if(response.success==true){
+                        get_datosTablaIni();
+                        bootbox.alert(response.message);
+                    }
+                }).fail(function (jqXHR, textStatus, error) {
+                    console.log("Post error: " + error);
+                });
             }
 
         }

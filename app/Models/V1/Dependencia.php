@@ -15,7 +15,7 @@ class Dependencia extends Model
     protected $fillable = [
         "id",
         "dependencia",
-        "parentid",
+        "parent_id",
         "nivel"
     ];
 

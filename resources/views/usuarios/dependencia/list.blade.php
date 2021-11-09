@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Usuarios</h1>
+            <h1>Dendencias</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -29,7 +29,7 @@
                 <h3 class="card-title">Listado de Dependencias</h3>
 
                 <div class="card-tools">
-                <a class="btn btn-default" href="{{ url('/usuarios/create') }}"><i class="fa fa-plus"></i> Nuevo</a>
+                <a class="btn btn-default" href="{{ route('dependencias.create') }}"><i class="fa fa-plus"></i> Nuevo</a>
                 </div>
               </div>
               <div class="card-body">
@@ -66,5 +66,5 @@
 @stop
 @section('content_js')
 <script src="{{ asset('js/bootbox/bootbox.min.js') }}"></script>
-<script src="{{ asset('js/usuarios-list.js') }}"></script>
+<script src="{{ asset('js/dependencias/dependencias-list.js') }}"></script>
 @stop

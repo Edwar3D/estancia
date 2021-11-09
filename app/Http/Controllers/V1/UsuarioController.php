@@ -18,17 +18,16 @@ class UsuarioController extends Controller
      */
     public function index(Request $request)
     {
-        //
+
         if(!isset($request["act"])){
             return view('usuarios.list');
         } else{
-            $datosTabla = Usuario::with('estatus')->with('dependencias')->where('estatus_id','=', 1)->paginate(100);
+            $datosTabla = Usuario::with('dependencia')->where('estatus_id','=', 1)->paginate(100);
             $datosTabla->withPath('usuarios.list');
             $response=[
                 'success'=> true,
                 'html' => view('usuarios.data.list-tabla',compact('datosTabla'))->render()
             ];
-            //dd($datosTabla);
             return response()->json($response);
         }
     }

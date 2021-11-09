@@ -17,9 +17,9 @@ class Usuario extends Model
     }
 
 
-    public function dependencias()
+    public function dependencia()
     {
-        return $this->belongsTo(Dependencias::class, "dependencia_id");
+        return $this->belongsTo(Dependencia::class, "dependencia_id");
     }
 
     public function update_privilleges($data,$UserPrivilleges){
