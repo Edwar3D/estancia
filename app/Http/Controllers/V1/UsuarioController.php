@@ -22,7 +22,7 @@ class UsuarioController extends Controller
         if(!isset($request["act"])){
             return view('usuarios.list');
         } else{
-            $datosTabla = Usuario::with('dependencia')->where('estatus_id','=', 1)->paginate(100);
+            $datosTabla = Usuario::with('dependencia')->where('estatus','=', 1)->paginate(100);
             $datosTabla->withPath('usuarios.list');
             $response=[
                 'success'=> true,
@@ -160,7 +160,7 @@ class UsuarioController extends Controller
             try {
                 $obj_tabla = Usuario::find($id);
 
-                $obj_tabla->estatus_id = 2;
+                $obj_tabla->estatus = 2;
                 $obj_tabla->updated_at =  date('Y-m-d H:i:s');
                 $obj_tabla->user_updated=Auth::user()->id;
 

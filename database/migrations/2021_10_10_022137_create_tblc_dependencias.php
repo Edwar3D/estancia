@@ -25,6 +25,7 @@ class CreateTblcDependencias extends Migration
             $table->integer('subdependencia')->nullable();
             $table->foreignId('parent_id','fk_tblc_dependencias_tblc_dependencias1_idx')->nullable()->constrained('tblc_dependencias')->onDelete('cascade');
             $table->integer('nivel')->nullable();
+            $table->integer('estatus')->default(0);
             $table->foreignId('user_created','fk_tblc_dependencias_users')->default(0)->constrained('users');
             $table->foreignId('user_updated','fk_tblc_dependencias_users2')->default(0)->constrained('users');
             $table->timestamps();

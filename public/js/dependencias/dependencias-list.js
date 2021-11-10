@@ -175,8 +175,9 @@ function f_popup_info(url,title) { //Ver planilla
 
 
 function f_delete_row(url,title) { //Ver planilla
+    console.log(title);
     bootbox.confirm({
-        message: "Deseas eliminar el usuario"+ title +"?",
+        message: "Deseas eliminar la dependecia "+ title +"?\nTambién se eliminarás sus subdependecias.",
         buttons: {
             confirm: {
                 label: 'Si',

@@ -9,7 +9,7 @@ $factory->define(Inspector::class, function (Faker $faker) {
     return [
         'numero_empleado'=> $faker->randomNumber(8, true),
         'nombre'=> $faker->name(),
-        'cargo_id'=> $faker->numberBetween(0, 2),
+        'cargo_id'=> $faker->numberBetween(1, 3),
         'jefe'=> $faker->name(),
         'telefono'=> $faker->phoneNumber(),
         'email'=> $faker->email(),

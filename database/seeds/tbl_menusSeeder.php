@@ -34,5 +34,29 @@ class tbl_menusSeeder extends Seeder
             'parentid' => 1,
             'orden' =>1,
         ]);
+
+        DB::table('tbl_menus')->insert([
+            'menu' => 'Usuarios',
+            'clave' => '',
+            'estatus' => 1,
+            'sub_menu' => 0,
+            'orden' =>1,
+        ]);
+        DB::table('tbl_menus')->insert([
+            'menu' => 'Crear',
+            'clave' => 'usuarios/create',
+            'estatus' => 1,
+            'sub_menu' => 1,
+            'parentid' => 4,
+            'orden' =>1,
+        ]);
+        DB::table('tbl_menus')->insert([
+            'menu' => 'lista',
+            'clave' => 'usuarios',
+            'estatus' => 1,
+            'sub_menu' => 1,
+            'parentid' => 4,
+            'orden' =>1,
+        ]);
     }
 }

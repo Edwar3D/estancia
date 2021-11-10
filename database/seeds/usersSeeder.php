@@ -19,13 +19,14 @@ class usersSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => '$2y$10$fUSO2YiqGHwheEx.JRzFCOSw109.XKat283e7idMfVifhpuIj/0PG', // prueba123
             'remember_token' => Str::random(10),
-            'nombres'=>'nombre1 nombre2',
-            'apellidos' =>'apellido1 apellido2',
-            'area_labora' =>'comunicación',
+            'nombres'=>'Eduardo Admin',
+            'apellidos' =>'Diaz DIAZ',
+            'area_laboral' =>null,
             'dependencia_id'=>null,
             'user_created'=>null,
             'user_update'=>null,
-            'is_admin'=>1
+            'is_admin'=>1,
+            'estatus'=>1
         ]);
     }
 }

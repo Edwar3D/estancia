@@ -20,14 +20,14 @@ class DependenciaController extends Controller
         if(!isset($request["act"])){
             return view('usuarios.dependencia.list');
         } else{
-            $datosTabla = Dependencia::paginate(100);
+            $datosTabla = Dependencia::where('estatus','=',1)->paginate(100);
             $datosTabla->withPath('usuarios.depedencia.list');
             $response=[
                 'success'=> true,
                 'html' => view('usuarios.data.list-tabla-dependencias',compact('datosTabla'))->render()
             ];
 
-            return view('usuarios.dependencia.list',compact('datosTabla'));
+            return response()->json($response);
         }
     }
 
@@ -38,7 +38,7 @@ class DependenciaController extends Controller
      */
     public function create()
     {
-        $dependencia_items = Dependencia::where('id','>', 0)->get();
+        $dependencia_items = Dependencia::where('id','>', 0)->where('subdependencia','=',0)->get();
         return view('usuarios.dependencia.add', compact('dependencia_items'));
     }
 
@@ -51,19 +51,27 @@ class DependenciaController extends Controller
     public function store(Request $request)
     {
      try {
-            $obj_tabla = new Dependencia;
-            $obj_tabla->dependencia = $request["nombre"];
-            $obj_tabla->responsable = $request["responsable"];
-            $obj_tabla->direccion = $request["direccion"];
-            $obj_tabla->telefono = $request["telefono"];
-            $obj_tabla->ext = $request["ext"];
-            $obj_tabla->email = $request["correo"];
-            $obj_tabla->subdependencia = 0;
-            $obj_tabla->parent_id = null;
-            $obj_tabla->nivel= 0;
-            $obj_tabla->user_created = Auth::user()->id;
-            $obj_tabla->user_updated = Auth::user()->id;
-            $obj_tabla->save();
+            $new_dependencia = new Dependencia;
+            $new_dependencia->dependencia = $request["nombre"];
+            $new_dependencia->responsable = $request["responsable"];
+            $new_dependencia->direccion = $request["direccion"];
+            $new_dependencia->telefono = $request["telefono"];
+            $new_dependencia->ext = $request["ext"];
+            $new_dependencia->email = $request["correo"];
+
+            if($request["dependencia_id"] == 0 || $request["dependencia_id"] == ''){
+                $new_dependencia->parent_id = null;
+                $new_dependencia->subdependencia= 0;
+            }else{
+                $new_dependencia->subdependencia = 1;
+                $new_dependencia->parent_id = $request["dependencia_id"];
+            }
+
+            $new_dependencia->nivel = 0;
+            $new_dependencia->estatus = 1;
+            $new_dependencia->user_created = Auth::user()->id;
+            $new_dependencia->user_updated = Auth::user()->id;
+            $new_dependencia->save();
             $message = 'Almacenado con éxito';
         return ['success' => true,'message' => $message];
         } catch(\Exception $e){
@@ -90,7 +98,9 @@ class DependenciaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $dependencia_items = Dependencia::where('subdependencia','=',0)->where('id','!=',$id)->get();
+        $dependencia = Dependencia::find($id);
+        return view('usuarios.dependencia.edit', compact('dependencia','dependencia_items'));
     }
 
     /**
@@ -102,7 +112,35 @@ class DependenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $dependecia = Dependencia::find($id);
+
+            $dependecia->dependencia = $request["nombre"];
+            $dependecia->responsable = $request["responsable"];
+            $dependecia->direccion = $request["direccion"];
+            $dependecia->telefono = $request["telefono"];
+            $dependecia->ext = $request["ext"];
+            $dependecia->email = $request["correo"];
+
+            if($request["dependencia_id"] == 0 || $request["dependencia_id"] == ''){
+                $dependecia->parent_id = null;
+                $dependecia->subdependencia= 0;
+            }else{
+                $dependecia->subdependencia = 1;
+                $dependecia->parent_id = $request["dependencia_id"];
+            }
+
+            $dependecia->nivel = 0;
+            $dependecia->estatus = 1;
+            $dependecia->user_updated = Auth::user()->id;
+            $dependecia->updated_at =  date('Y-m-d H:i:s');
+
+            $dependecia->save();
+            $message = 'Actualización Exitosa';
+            return ['success' => true,'message' => $message];
+        }catch(\Exception $e){
+            return ['success' => false,'message' => $e->getMessage()];
+        }
     }
 
     /**
@@ -113,7 +151,22 @@ class DependenciaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $dependecia = Dependencia::find($id);
+
+            $dependecia->estatus = 0;
+            $dependecia->updated_at =  date('Y-m-d H:i:s');
+            $dependecia->user_updated = Auth::user()->id;
+
+            $dependecia->save();
+            $message = 'Dependencia Eliminado';
+        return ['success' => true,'message' => $message];
+        } catch(\Exception $e){
+           // do task when error
+           //return $e->getMessage();   // insert query
+            //return "Error al Guardar los datos";
+            return ['success' => false,'message' => $e->getMessage()];
+        }
     }
 
 }

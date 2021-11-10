@@ -8,17 +8,17 @@ var FormValidation = function () {
         var success1 = $('.alert-success', form);
 
         form.validate({
-            errorElement: 'span',
-            errorClass: 'help-block help-block-error',
-            focusInvalid: false,
-            ignore: "",
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input
             messages: {
                 nombre: {
                     required: "Obligatorio"
                 },
                 dependencia_id:
                 {
-                    required:"Obligatorio"
+                    required: "Obligatorio"
                 },
                 responsable: {
                     required: "Obligatorio"
@@ -28,7 +28,7 @@ var FormValidation = function () {
                 },
                 correo: {
                     required: "Obligatorio",
-                    email:"Correo no válido"
+                    email: "Correo no válido"
                 },
                 telefono: {
                     required: "Obligatorio",
@@ -38,8 +38,8 @@ var FormValidation = function () {
                 nombre: {
                     required: true
                 },
-                dependencia_id:{
-                    required:true
+                dependencia_id: {
+                    required: true
                 },
                 responsable: {
                     required: true
@@ -55,13 +55,11 @@ var FormValidation = function () {
                     required: true,
                     digits: true,
                     minlength: 10,
-                    maxlength:10
+                    maxlength: 10
                 },
-                ext: {
-                    required: true
-                },
+
             },
-            invalidHandler: function (event, validator) {
+            invalidHandler: function (event, validator) { //display error alert on form submit
                 success1.hide();
                 error1.show();
             },
@@ -88,24 +86,26 @@ var FormValidation = function () {
     }
 
     var handleSubmit1 = function () {
+
         var formOpciones = {
             beforeSubmit: function () {
                 if (!$('#form').valid()) {
+
                     bootbox.alert("<strong>Cometio un error.</strong><br><br><pre>Verifique la información y vuelva a intentarlo.</pre>");
                     return false;
                 }
                 else {
+
                     $("#btnSave").attr('disabled', 'true');
                 }
             },
-            url:'/dependencias',
-            type: 'post',
+            url: url_route + '/dependencias/' + $('#id_registro').val(),
+            type: 'PUT',
             data: $('#form').serialize(),
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 $("#btnSave").removeAttr('disabled');
                 if (response.success == true) {
-
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
                         location.href = url_route + "/dependencias";
                     });
@@ -113,6 +113,9 @@ var FormValidation = function () {
                 } else {
                     bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>" + response.message + "</pre>");
                 }
+
+
+
 
             },
             timeout: 60000,
@@ -123,7 +126,6 @@ var FormValidation = function () {
         };
 
         $('#form').ajaxForm(formOpciones);
-
 
     }
 
@@ -142,5 +144,4 @@ var FormValidation = function () {
 
 $(document).ready(function () {
     FormValidation.init();
-
 });

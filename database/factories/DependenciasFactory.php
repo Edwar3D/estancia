@@ -10,11 +10,12 @@ $factory->define(Dependencia::class, function (Faker $faker) {
         'dependencia'=>$faker->word(),
         'responsable'=>$faker->name(),
         'direccion'=>$faker->address(),
-        'telefono'=>$faker->phoneNumber(),
+        'telefono'=>$faker->tollFreePhoneNumber(),
         'ext'=>$faker->buildingNumber(),
         'email'=>$faker->email(),
         'subdependencia'=>0,
         'parent_id'=>null,
+        'estatus'=>1,
         'nivel'=>$faker->randomDigitNot(0),
         'user_created'=>1,
         'user_updated'=>1
