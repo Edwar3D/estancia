@@ -22,6 +22,11 @@ class Usuario extends Model
         return $this->belongsTo(Dependencia::class, "dependencia_id");
     }
 
+    public function arealaboral()
+    {
+        return $this->belongsTo(Dependencia::class, "area_laboral");
+    }
+
     public function update_privilleges($data,$UserPrivilleges){
         try {
 

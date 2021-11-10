@@ -54,12 +54,8 @@
                     <td> {{$datoActual->username}} </td>
                     <td> {{$datoActual->nombres}}  </td>
                     <td> {{$datoActual->apellidos}}</td>
-                    @if ($datoActual->dependencia)
-                    <td> {{$datoActual->dependencia->dependencia}} </td>
-                    @else
-                        <td>No encontrado</td>
-                    @endif
-                    <td> {{$datoActual->area_labora}}</td>
+                    <td> {{$datoActual->dependencia->dependencia ?? '' }}</td>
+                    <td> {{$datoActual->arealaboral->dependencia ?? ''}}</td>
                     <td> {{$datoActual->created_at}} </td>
                     <td style="text-align: center;">
                         <div class="btn-group">

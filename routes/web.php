@@ -35,7 +35,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('/inicio', 'HomeController@index')->name('home');
 
     Route::resource('usuarios', V1\UsuarioController::class)->only([
-        'index', 'create','show','store','edit','update','destroy'
+        'index', 'create','show','store','edit','update','destroy',
     ]);
 
     Route::resource('dependencias', V1\DependenciaController::class)->only([

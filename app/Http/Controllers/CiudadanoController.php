@@ -43,13 +43,13 @@ class CiudadanoController extends Controller
         $count = sizeof($inspectores);
         $inspectores->withPath("/ciudadano?select_dependencia={$request['select_dependencia']}&search={$request['search']}");
 
-        return view('usuarios.ciudadano.tabla_inspectores',compact('options','inspectores','dependencias','inspector','dependencia','request','count'));
+        return view('ciudadano.tabla_inspectores',compact('options','inspectores','dependencias','inspector','dependencia','request','count'));
     }
 
     public function viewInspector($id){
         $inspector = Inspector::find($id);
         $dependencia = Dependencia::find($inspector->dependencia_id);
 
-        return view('usuarios.ciudadano.view_inspector',compact('inspector', 'dependencia'));
+        return view('ciudadano.view_inspector',compact('inspector', 'dependencia'));
     }
 }

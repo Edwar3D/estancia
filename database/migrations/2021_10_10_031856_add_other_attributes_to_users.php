@@ -21,7 +21,7 @@ class AddOtherAttributesToUsers extends Migration
             $table->longText('img_avatar')->nullable();
             $table->integer('is_admin')->default(0);
             $table->foreignId('user_created','fk_users_users')->nullable()->constrained('users');
-            $table->foreignId('user_update','fk_users_users2')->nullable()->constrained('users');
+            $table->foreignId('user_updated','fk_users_users2')->nullable()->constrained('users');
             $table->integer('estatus')->default(0);
         });
     }

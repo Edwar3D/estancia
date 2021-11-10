@@ -24,7 +24,7 @@ class usersSeeder extends Seeder
             'area_laboral' =>null,
             'dependencia_id'=>null,
             'user_created'=>null,
-            'user_update'=>null,
+            'user_updated'=>null,
             'is_admin'=>1,
             'estatus'=>1
         ]);

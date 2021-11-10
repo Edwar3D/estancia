@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container-fluid p-4 ">
-        @include('usuarios.ciudadano.search')
+        @include('ciudadano.search')
     </div>
 
     <div class="row  justify-content-center">

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\V1\Usuario;
-use App\Models\V1\Estatus;
 use App\Models\V1\Dependencia;
 use Auth;
 
@@ -22,7 +21,7 @@ class UsuarioController extends Controller
         if(!isset($request["act"])){
             return view('usuarios.list');
         } else{
-            $datosTabla = Usuario::with('dependencia')->where('estatus','=', 1)->paginate(100);
+            $datosTabla = Usuario::with('dependencia')->with('arealaboral')->where('estatus','=', 1)->paginate(100);
             $datosTabla->withPath('usuarios.list');
             $response=[
                 'success'=> true,
@@ -37,11 +36,28 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
-        $dependencia_items = Dependencia::where('id','>', 0)->get();
-        return view('usuarios.add', compact('dependencia_items'));
+
+        if($request['act'] == null){
+            $dependencia_items = Dependencia::where('subdependencia','=', 0)->get();
+            $subdependencia_items = [];
+            return view('usuarios.add', compact('dependencia_items','subdependencia_items'));
+        }else{
+            if($request['dependencia_id']>0){
+                $subdependencia_items = Dependencia::select('id','dependencia as text')->where('parent_id',"=" ,$request['dependencia_id'])->get();
+
+            }else{
+                $subdependencia_items = [];
+            }
+             $response=[
+                'success'=> true,
+                'de'=>$request['dependencia_id'],
+                'data' => $subdependencia_items,
+            ];
+            return response()->json($response);
+        }
+
     }
 
     /**
@@ -62,16 +78,16 @@ class UsuarioController extends Controller
             $obj_tabla->nombres = $request["nombre"];
             $obj_tabla->apellidos = $request["apellidos"];
             $obj_tabla->dependencia_id = $request["dependencia_id"];
-            $obj_tabla->area_labora = $request["area_labora"];
+            $obj_tabla->area_laboral = $request["subdependencia_id"];
             //$obj_tabla->is_movil = $request["is_movil"];
-            $obj_tabla->tel_oficina = $request["tel_oficina"];
+            /* $obj_tabla->tel_oficina = $request["tel_oficina"];
             $obj_tabla->extension = $request["extensiones"];
-            $obj_tabla->celular = $request["celular"];
+            $obj_tabla->celular = $request["celular"]; */
             $obj_tabla->created_at =  date('Y-m-d H:i:s');
             $obj_tabla->user_created=Auth::user()->id;
             $obj_tabla->updated_at =  date('Y-m-d H:i:s');
             $obj_tabla->user_updated=Auth::user()->id;
-            $obj_tabla->estatus_id =  1;
+            $obj_tabla->estatus =  1;
 
             $obj_tabla->save();
             $message = 'Almacenado con éxito';
