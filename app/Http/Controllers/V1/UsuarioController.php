@@ -121,8 +121,15 @@ class UsuarioController extends Controller
     {
         //
         $info = Usuario::where('id', $id)->first();
-        $dependencia_items = Dependencia::where('id','>', 0)->get();
-        return view('usuarios.edit', compact('info','dependencia_items'));
+
+        $dependencia_items = Dependencia::where('id','>', 0)->where('subdependencia','=',0)->get();
+
+        if($info->dependencia == null)
+            $subdependencia_items = [];
+        else
+            $subdependencia_items = Dependencia::where('parent_id','=', $info->dependencia_id)->get();
+
+        return view('usuarios.edit', compact('info','dependencia_items','subdependencia_items'));
     }
 
     /**
@@ -138,20 +145,19 @@ class UsuarioController extends Controller
         try {
             $obj_tabla = Usuario::find($id);
 
-
             $obj_tabla->nombres = $request["nombre"];
             $obj_tabla->apellidos = $request["apellidos"];
             $obj_tabla->dependencia_id = $request["dependencia_id"];
-            $obj_tabla->area_labora = $request["area_labora"];
+            $obj_tabla->area_laboral = $request["subdependencia_id"];
             if($request["password"]!=''){
             $obj_tabla->password = bcrypt($request["password"]);
             }
             //$obj_tabla->is_movil = $request["is_movil"];
-            $obj_tabla->tel_oficina = $request["tel_oficina"];
+           /*  $obj_tabla->tel_oficina = $request["tel_oficina"];
             $obj_tabla->extension = $request["extensiones"];
-            $obj_tabla->celular = $request["celular"];
+            $obj_tabla->celular = $request["celular"]; */
             $obj_tabla->updated_at =  date('Y-m-d H:i:s');
-            $obj_tabla->user_updated=Auth::user()->id;
+            $obj_tabla->user_updated = Auth::user()->id;
 
             $obj_tabla->save();
             $message = 'Almacenado con éxito';
@@ -190,4 +196,5 @@ class UsuarioController extends Controller
                 return ['success' => false,'message' => $e->getMessage()];
             }
     }
+
 }
