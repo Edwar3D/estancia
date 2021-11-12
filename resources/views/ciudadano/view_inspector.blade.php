@@ -2,6 +2,11 @@
 
 @section('header')
     @parent
+
+    <a class=" float-right btn btn-secondary  btn-sm mx-2 my-2" href="javascript:history.back()">
+        <i class="fas fa-arrow-circle-left d-inline"></i>
+        <span class="d-inline">Regresar</span>
+    </a>
 @endsection
 
 @section('content')
@@ -20,7 +25,8 @@
                     <div class="card-body">
                         <div class="row">
                             <h5 class="card-title text-center font-weight-bold col-12">
-                                {{ !empty($inspector->nombre) ? $inspector->nombre : '' }}</h5>
+                                {{ $inspector->nombre ??  '' }}
+                                {{ $inspector->apellidos ??  '' }}</h5>
                             <span class="col-sm-12 col-form-label text-center">
                                 Cargo:
                                 @if ($inspector)
@@ -37,17 +43,17 @@
                 </div>
             </div>
             <div class="card col-md-9 col-sm-12 ">
-                <h5 class="card-header text-center font-weight-bold">{{ $dependencia->dependencia ?? '' }}</h5>
+                <h5 class="card-header text-center font-weight-bold">{{ $inspector->dependencia->dependencia ?? '' }}</h5>
                 <div class="card-body">
                     <dl class="row h-100 pt-md-2 pt-sm-0">
                         <dt class="col-sm-12 col-md-5 col-lg-3 control-label font-weight-700">Unidad Administrativa:</dt>
-                        <dd class="col-sm-12 col-md-7 col-lg-9 font-weight-normal">{{ $dependencia->unidad_administrativa ?? '' }}</dd>
+                        <dd class="col-sm-12 col-md-7 col-lg-9 font-weight-normal">{{ $inspector->areaadministrativa->dependencia ?? ''}}</dd>
 
                         <dt class="col-sm-12 col-md-5 col-lg-3  control-label font-weight-700">Jefe Inmediato:</dt>
                         <dd class="col-sm-12 col-md-7 col-lg-9  font-weight-normal">{{ $inspector->jefe ?? '' }}</dd>
 
                         <dt class="col-sm-12 col-md-5 col-lg-3 control-label font-weight-700">Dirrección:</dt>
-                        <dd class="col-sm-12 col-md-7 col-lg-9 font-weight-normal">{{ $dependencia->direccion ?? '' }}</dd>
+                        <dd class="col-sm-12 col-md-7 col-lg-9 font-weight-normal">{{ $inspector->dependencia->direccion ?? '' }}</dd>
 
                         <dt class="col-sm-12  col-md-5 col-lg-3  control-label font-weight-700">Correo institucional:</dt>
                         <dd class="col-sm-12  col-md-7 col-lg-9 font-weight-normal">{{ $inspector->email ?? '' }}</dd>

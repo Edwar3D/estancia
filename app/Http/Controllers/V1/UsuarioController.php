@@ -73,7 +73,7 @@ class UsuarioController extends Controller
             $obj_tabla = new Usuario;
 
             $obj_tabla->username = $request["username"];
-            $obj_tabla->email = $request["username"];
+            $obj_tabla->email = $request["correo"];
             $obj_tabla->password = bcrypt($request["password"]);
             $obj_tabla->nombres = $request["nombre"];
             $obj_tabla->apellidos = $request["apellidos"];

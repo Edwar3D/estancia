@@ -47,9 +47,8 @@ class CiudadanoController extends Controller
     }
 
     public function viewInspector($id){
-        $inspector = Inspector::find($id);
-        $dependencia = Dependencia::find($inspector->dependencia_id);
+        $inspector = Inspector::with('dependencia')->with('areaadministrativa')-> find($id);
 
-        return view('ciudadano.view_inspector',compact('inspector', 'dependencia'));
+        return view('ciudadano.view_inspector',compact('inspector', ));
     }
 }

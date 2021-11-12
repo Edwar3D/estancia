@@ -12,35 +12,13 @@ class users_menusSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users_menus')->insert([
-            'user_id'=>1,
-            'menu_id'=>1,
-            'user_created'=>1,
-        ]);
-        DB::table('users_menus')->insert([
-            'user_id'=>1,
-            'menu_id'=>2,
-            'user_created'=>1,
-        ]);
-        DB::table('users_menus')->insert([
-            'user_id'=>1,
-            'menu_id'=>3,
-            'user_created'=>1,
-        ]);
-        DB::table('users_menus')->insert([
-            'user_id'=>1,
-            'menu_id'=>4,
-            'user_created'=>1,
-        ]);
-        DB::table('users_menus')->insert([
-            'user_id'=>1,
-            'menu_id'=>5,
-            'user_created'=>1,
-        ]);
-        DB::table('users_menus')->insert([
-            'user_id'=>1,
-            'menu_id'=>6,
-            'user_created'=>1,
-        ]);
+        for($i=1; $i<=12; $i++){
+            DB::table('users_menus')->insert([
+                'user_id'=>1,
+                'menu_id'=>$i,
+                'user_created'=>1,
+            ]);
+        }
+
     }
 }

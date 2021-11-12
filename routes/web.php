@@ -23,8 +23,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('login', 'Auth\LoginController@showLoginForm');
-
 Route::post('login-user', 'Auth\LoginController@userLogin');
+
+
+Route::get('dependencia/login', 'Auth\LoginController@showLoginFormDependencia');
+Route::post('login-dependencia', 'Auth\LoginController@dependenciaLogin');
 
 //Auth::routes();
 
@@ -42,9 +45,15 @@ Route::group(['middleware'=>'auth'], function () {
         'index', 'create','show','store','edit','update','destroy'
     ]);
 
-
     Route::resource('privilegios', V1\PrivilegioController::class)->only([
         'edit','update'
+    ]);
+
+    //MODULO DE DEPENDENCIA
+    Route::get('/dependencia/inicio', 'ModuloDependencia@index')->name('dependencia.home');
+
+    Route::resource('inspectores', V1\InspectorController::class)->only([
+        'index', 'create','show','store','edit','update','destroy',
     ]);
 
 });

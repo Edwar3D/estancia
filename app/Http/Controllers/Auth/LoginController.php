@@ -49,6 +49,11 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    public function showLoginFormDependencia()
+    {
+        return view('auth.dependencia_login');
+    }
+
     public function userLogin(Request $request)
     {
 
@@ -78,4 +83,36 @@ class LoginController extends Controller
             ]);
         }
     }
+
+    public function dependenciaLogin(Request $request)
+    {
+
+        $messages = [
+            "username.required" => "Usuario Obligatoria",
+            "username.exists" => "Usuario no existe",
+            "password.required" => "Contraseña Obligatoria",
+            "password.min" => "La contraseña debe tener al menos 6 caracteres"
+        ];
+
+        // validate the form data
+        $validator = Validator::make($request->all(), [
+                'username' => 'required|exists:users,username',
+                'password' => 'required|min:6'
+            ], $messages);
+        //dd($validator->fails());
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        } else {
+
+            if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'is_admin' => 0], $request->get('remember'))) {
+
+                return redirect()->intended('/dependencia/inicio');
+            }
+            return back()->withInput($request->only('email'))->withErrors([
+                'password' => 'Contraseña Incorrecta.'
+            ]);
+        }
+    }
+
+
 }

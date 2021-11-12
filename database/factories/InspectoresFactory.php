@@ -9,13 +9,14 @@ $factory->define(Inspector::class, function (Faker $faker) {
     return [
         'numero_empleado'=> $faker->randomNumber(8, true),
         'nombre'=> $faker->name(),
+        'apellidos'=> $faker->name(),
         'cargo_id'=> $faker->numberBetween(1, 3),
         'jefe'=> $faker->name(),
         'telefono'=> $faker->phoneNumber(),
         'email'=> $faker->email(),
-        'estado_actual'=> 0,
+        'estado_actual'=> 1,
         'foto'=> 'null',
-        'area_administrativa'=>$faker->randomElement(['unidad A','unidad C','unidad C']),
+        'area_administrativa'=>null,
         'dependencia_id'=> $faker->randomDigitNot(0),
     ];
 });

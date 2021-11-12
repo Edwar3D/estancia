@@ -12,6 +12,6 @@ class tbl_inspectoresSeeder extends Seeder
      */
     public function run()
     {
-       factory(Inspector::class, 30)->create();
+       factory(Inspector::class, 100)->create();
     }
 }

@@ -11,6 +11,13 @@ class Inspector extends Model
     public function cargo(){
         return $this->belongsTo(Cargo::class);
     }
+
+    public function dependencia(){
+        return $this->belongsTo(Dependencia::class,'dependencia_id');
+    }
+    public function areaadministrativa(){
+        return $this->belongsTo(Dependencia::class,'area_administrativa');
+    }
     public function ordenes()
     {
         return $this->hasMany(Orden::class);

@@ -27,7 +27,7 @@
                                 <tr class="filas ">
                                     <th>
                                         <a class="font-weight-blod text-dark" href="{{ route('ciudadano.verInspector', [$inspect->id]) }}">
-                                            {{ $inspect->nombre }}
+                                            {{ $inspect->nombre }} {{ $inspect->apellidos }}
                                         </a>
                                     </th>
                                     <td>
