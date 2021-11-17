@@ -23,12 +23,16 @@ class CreateOrdensTable extends Migration
             $table->string('tipo');
             $table->timestamps();
         });
+        Schema::create('tbl_estatus_ordenes', function (Blueprint $table) {
+            $table->id();
+            $table->string('estatus');
+            $table->timestamps();
+        });
         Schema::create('tbl_ordenes', function (Blueprint $table) {
             $table->id();
             $table->string('folio',7)->unique();
-            $table->string('direccion',250);
-            $table->string('archivo');
-            $table->integer('estado_actual');
+            $table->text('direccion');
+            $table->foreignId('estatus_id','fk_ordenes_tbl_estatus_ordenes')->constrained('tbl_estatus_ordenes');
             $table->date('fecha');
             $table->foreignId('tipo_id','fk_ordenes_tbl_zonas')->constrained('tbl_tipos_inspeccion');
             $table->foreignId('zona_id','fk_tbl_orden_tbl_zonas')->constrained('tbl_zonas');
@@ -51,5 +55,6 @@ class CreateOrdensTable extends Migration
         Schema::dropIfExists('tbl_ordenes');
         Schema::dropIfExists('tbl_zonas');
         Schema::dropIfExists('tbl_tipos_inspeccion');
+        Schema::dropIfExists('tbl_estatus_ordenes');
     }
 }

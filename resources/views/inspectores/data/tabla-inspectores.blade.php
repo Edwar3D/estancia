@@ -6,7 +6,7 @@
             <table class="table table-sm table-hover table-striped  table-responsive-md ">
                 <thead>
                     <tr class="bg-green-custom">
-                        <th scope="col">Número de empleado</th>
+                        <th scope="col">Num. de empleado</th>
                         <th scope="col">Nombre del inspector</th>
                         <th scope="col">Cargo</th>
                         <th scope="col">Area laboral</th>
@@ -23,6 +23,7 @@
                                 <a class="font-weight-blod text-dark"
                                     href="{{ route('ciudadano.verInspector', [$inspect->id]) }}">
                                     {{ $inspect->nombre }}
+                                    {{ $inspect->apellidos }}
                                 </a>
                             </th>
                             <td>
@@ -33,8 +34,8 @@
                             </td>
                             <td style="text-align: center;">
                                 <div class="btn-group">
-
-                                    <button type="button" class="btn btn-outline-success  dropdown-toggle dropdown-icon"
+                                    <button type="button" class="btn btn-success">Acciones</button>
+                                    <button type="button" class="btn btn-success  dropdown-toggle dropdown-icon"
                                         data-toggle="dropdown">
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>

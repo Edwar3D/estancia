@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTblOrigenesInspeccion extends Migration
+class CreateTblFundamentosOrden extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateTblOrigenesInspeccion extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_origenes_inspeccion', function (Blueprint $table) {
+        Schema::create('tbl_fundamentos_orden', function (Blueprint $table) {
             $table->id();
-            $table->text('origen');
+            $table->text('fundamento');
+            $table->text('url');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateTblOrigenesInspeccion extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_origenes_inspeccion');
+        Schema::dropIfExists('tbl_fundamentos_orden');
     }
 }

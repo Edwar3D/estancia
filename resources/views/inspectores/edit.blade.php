@@ -45,10 +45,10 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-inspector" role="tabpanel"
                                     aria-labelledby="nav-inspector-tab">
-                                @include('inspectores.edit-inspector')</div>
+                                @include('inspectores.data.edit-inspector')</div>
                                 <div class="tab-pane fade" id="nav-dependencia" role="tabpanel"
                                     aria-labelledby="nav-dependencia-tab">
-                                    @include('inspectores.edit-dependencia')
+                                    @include('inspectores.data.edit-dependencia')
                                 </div>
                             </div>
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTblFundamentos extends Migration
+class CreateTblOrdenesDocumentosOrden extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateTblFundamentos extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_fundamentos', function (Blueprint $table) {
-            $table->id();
-            $table->text('fundamento');
-            $table->text('url');
+        Schema::create('tbl_ordenes_documentos_orden', function (Blueprint $table) {
+            $table->foreignId('orden_id')->constrained('tbl_ordenes');
+            $table->foreignId('documento_id')->constrained('tbl_documentos_orden');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateTblFundamentos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_fundamentos');
+        Schema::dropIfExists('tbl_ordenes_documentos_orden');
     }
 }

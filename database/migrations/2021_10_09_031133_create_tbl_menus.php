@@ -19,6 +19,7 @@ class CreateTblMenus extends Migration
             $table->string('clave',80);
             $table->integer('ver')->default(0)->nullable();
             $table->integer('agregar')->default(0)->nullable();
+            $table->integer('editar')->default(0)->nullable();
             $table->integer('eliminar')->default(0)->nullable();
             $table->integer('impresion')->default(0)->nullable();
             $table->integer('exportar')->default(0)->nullable();

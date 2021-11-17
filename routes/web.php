@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\V1\FundamentoJuridico;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,12 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::resource('inspectores', V1\InspectorController::class)->only([
         'index', 'create','show','store','edit','update','destroy',
+    ]);
+
+    //fundamentos juridicos de inspecpectores
+    Route::post('fundamentosInspectores/addFundamentosInspector', 'V1\FundamentoInspectorController@addFundamentosInspector')->name('addFundamentosInspector');
+    Route::resource('fundamentosInspectores', V1\FundamentoInspectorController::class)->only([
+        'index','store'
     ]);
 
 });

@@ -12,11 +12,13 @@ $factory->define(Inspector::class, function (Faker $faker) {
         'apellidos'=> $faker->name(),
         'cargo_id'=> $faker->numberBetween(1, 3),
         'jefe'=> $faker->name(),
-        'telefono'=> $faker->phoneNumber(),
+        'telefono'=>9671234545,
         'email'=> $faker->email(),
         'estado_actual'=> 1,
         'foto'=> 'null',
         'area_administrativa'=>null,
         'dependencia_id'=> $faker->randomDigitNot(0),
+        'user_created'=>1,
+        'user_updated'=>1
     ];
 });

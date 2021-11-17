@@ -21,16 +21,19 @@ class CreateInspectorsTable extends Migration
         Schema::create('tbl_inspectores', function (Blueprint $table) {
             $table->id();
             $table->string('numero_empleado',8)->unique();
-            $table->string('nombre',250);
+            $table->string('nombre');
             $table->string('apellidos');
             $table->foreignId('cargo_id','fk_inspentores_tblc_cargos')->constrained('tbl_cargos');
-            $table->string('jefe',250);/*diferente del encargado de dependencia?*/
-            $table->string('telefono',45);
+            $table->string('jefe');
+            $table->bigInteger('telefono');
             $table->string('email');
             $table->integer('estado_actual')->default(0);
-            $table->longText('foto');/*como se guarda */
+            $table->longText('foto');
             $table->foreignId('area_administrativa','fk_inspentores_tblc_dependencias')->nullable()->constrained('tblc_dependencias');
             $table->foreignId('dependencia_id','fk_inspentores_tblc_dependencias2')->constrained('tblc_dependencias');
+            $table->foreignId('user_created')->constrained('users');
+            $table->foreignId('user_updated')->constrained('users');
+
             $table->timestamps();
         });
     }
@@ -42,6 +45,7 @@ class CreateInspectorsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_inspectores');
         Schema::dropIfExists('tbl_cargos');
     }

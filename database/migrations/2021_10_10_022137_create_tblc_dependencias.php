@@ -16,18 +16,18 @@ class CreateTblcDependencias extends Migration
 
         Schema::create('tblc_dependencias', function (Blueprint $table) {
             $table->id();
-            $table->string('dependencia',180)->nullable();
-            $table->string('responsable',200)->nullable();
-            $table->string('direccion',255)->nullable();
-            $table->string('telefono')->nullable();
+            $table->string('dependencia');
+            $table->string('responsable');
+            $table->text('direccion');
+            $table->bigInteger('telefono');
             $table->string('ext')->nullable();
-            $table->string('email')->nullablfke();
-            $table->integer('subdependencia')->nullable();
+            $table->string('email');
+            $table->integer('subdependencia')->default(0);
             $table->foreignId('parent_id','fk_tblc_dependencias_tblc_dependencias1_idx')->nullable()->constrained('tblc_dependencias')->onDelete('cascade');
             $table->integer('nivel')->nullable();
             $table->integer('estatus')->default(0);
-            $table->foreignId('user_created','fk_tblc_dependencias_users')->default(0)->constrained('users');
-            $table->foreignId('user_updated','fk_tblc_dependencias_users2')->default(0)->constrained('users');
+            $table->foreignId('user_created','fk_tblc_dependencias_users')->constrained('users');
+            $table->foreignId('user_updated','fk_tblc_dependencias_users2')->constrained('users');
             $table->timestamps();
         });
     }

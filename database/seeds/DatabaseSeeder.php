@@ -21,13 +21,11 @@ class DatabaseSeeder extends Seeder
 
         ///DATOS DE INSPECTORES
         $this->call(tbl_cargos::class);
-        $this->call(tbl_fundamentos::class);
-        $this->call(tbl_origenesSeeder::class);
         $this->call(tbl_inspectoresSeeder::class);
 
         //Ordenes
-        $this->call(tbl_zonasSeeder::class);
-        $this->call(tbl_ordenesSeeder::class);
+        //$this->call(tbl_zonasSeeder::class);
+        //$this->call(tbl_ordenesSeeder::class);
 
     }
 }

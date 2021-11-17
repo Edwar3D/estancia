@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div id="image-preview" class="container">
-                                            <img id="image" src="data:image/png;base64,"
+                                            <img id="image" src="{{$inspector->foto ?? ''}}"
                                             onError="this.onerror=null;this.src='{{ asset('img/avatar-default.png') }}'"
                                             class="img-thumbnail card-img-top" alt="User Image" style="height: 220px; width: 220px; object-fit:cover;">
                                         </div>

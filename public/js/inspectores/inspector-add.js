@@ -26,7 +26,10 @@ var FormValidation = function () {
                     cargo: {
                         required: "Obligatorio"
                     },
-                    area_administrativa: {
+                    subdependencia_id: {
+                        required: "Obligatorio",
+                    },
+                    dependencia_id: {
                         required: "Obligatorio",
                     },
                     jefe: {
@@ -36,7 +39,10 @@ var FormValidation = function () {
                         required: "Obligatorio"
                     },
                     telefono: {
-                        required: "Obligatorio"
+                        required: "Obligatorio",
+                        digits:"Solo dígitos",
+                        maxlength: "Ingrese 10 dígitos",
+                        minlength: "Ingrese 10 dígitos",
                     },
                 },
                 rules: {
@@ -55,7 +61,10 @@ var FormValidation = function () {
                     cargo: {
                         required: true
                     },
-                    area_administrativa: {
+                    dependencia_id: {
+                        required: true,
+                    },
+                    subdependencia_id: {
                         required: true,
                     },
                     nombre: {
@@ -68,7 +77,10 @@ var FormValidation = function () {
                         required: true
                     },
                     telefono: {
-                        required: true
+                        required: true,
+                        digits: true,
+                        minlength: 10,
+                        maxlength:10
                     },
 
                     correo: {
@@ -113,7 +125,7 @@ var FormValidation = function () {
                     }
                     else {
 
-                        $("#btnSave").attr('disabled', 'true');
+                        $("#btnSave").prop("disabled", true);
                     }
                 },
                 url: url_route+'/inspectores',
@@ -121,16 +133,22 @@ var FormValidation = function () {
                 data: $('#form1').serialize(),
                 success: function(response)
                 {
-                    $("#btnSave").removeAttr('disabled');
+                    console.log(response)
+
                     if(response.success==true)
                     {
                          bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>"+response.message+"</pre>", function(){
-                            location.href =url_route+"/inspectores";
+                            $("#nav-fudamentos-tab").click()
+                            $("#btnCancel").prop("disabled", true);
+                            $("#id_inspector").val(response.id);
                         });
 
                     }else
                     {
-                        bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>"+response.message+"</pre>");
+                        bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>"+ response.message +"</pre>", function(){
+                            $("#btnSave").removeAttr('disabled');
+                            $("html").html = response
+                        });
                     }
                 },
                 timeout:60000,
@@ -155,8 +173,29 @@ var FormValidation = function () {
 
 }();
 
+
+
 $(document).ready(function(){
     FormValidation.init();
 });
 
-
+function selectDependencia() {
+    $.ajax({
+            url: '/usuarios/create/?act=1',
+            type: "GET",
+            dateType: 'json',
+            data: $('#form1').serialize(),
+        })
+        .done(function(response) {
+            if (response.success == true) {
+                /*   console.log('success');
+                  console.log(response.data); */
+                $('#subdependencia_id').empty();
+                $('#subdependencia_id').select2({
+                    data: response.data
+                });
+            }
+        }).fail(function(jqXHR, textStatus, error) {
+            console.log("Get error: " + error);
+        });
+}

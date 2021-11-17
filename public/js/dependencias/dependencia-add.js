@@ -57,9 +57,6 @@ var FormValidation = function () {
                     minlength: 10,
                     maxlength:10
                 },
-                ext: {
-                    required: true
-                },
             },
             invalidHandler: function (event, validator) {
                 success1.hide();
