@@ -57,7 +57,7 @@ Route::group(['middleware'=>'auth'], function () {
         'index', 'create','show','store','edit','update','destroy',
     ]);
 
-    //fundamentos juridicos de inspecpectores
+    //fundamentos juridicos de inspectores
     Route::post('fundamentosInspectores/addFundamentosInspector', 'V1\FundamentoInspectorController@addFundamentosInspector')->name('addFundamentosInspector');
     Route::resource('fundamentosInspectores', V1\FundamentoInspectorController::class)->only([
         'index','store'

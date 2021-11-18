@@ -1,8 +1,32 @@
 'use strict';
+
+function selectDependencia() {
+    $.ajax({
+            url: '/usuarios/create/?act=1',
+            type: "GET",
+            dateType: 'json',
+            data: $('#form1').serialize(),
+        })
+        .done(function(response) {
+            if (response.success == true) {
+                $('#subdependencia_id').empty();
+                $('#subdependencia_id').select2({
+                    data: response.data,
+                });
+                if($('#id_areaAdmin').val() != ''){
+                    $('#subdependencia_id').val($('#id_areaAdmin').val());
+                    $('#subdependencia_id').trigger('change');
+                }
+            }
+        }).fail(function(jqXHR, textStatus, error) {
+            console.log("Get error: " + error);
+        });
+}
+
+
 var FormValidation = function () {
 
     var handleValidation1 = function () {
-
         var form1 = $('#form1');
         var error1 = $('.alert-danger', form1);
         var success1 = $('.alert-success', form1);
@@ -13,16 +37,8 @@ var FormValidation = function () {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             messages: {
-                username: {
+                numero_empleado: {
                     required: "Obligatorio"
-                },
-
-                password: {
-                    required: "Obligatorio"
-                },
-                re_password: {
-                    required: "Obligatorio",
-                    equalTo: "No Coicide con la Contraseña",
                 },
                 nombre: {
                     required: "Obligatorio"
@@ -30,33 +46,34 @@ var FormValidation = function () {
                 apellidos: {
                     required: "Obligatorio"
                 },
-                dependencia_id: {
+                cargo: {
                     required: "Obligatorio"
                 },
                 subdependencia_id: {
+                    required: "Obligatorio",
+                },
+                dependencia_id: {
+                    required: "Obligatorio",
+                },
+                jefe: {
                     required: "Obligatorio"
                 },
-                /* tel_oficina: {
+                correo: {
                     required: "Obligatorio"
                 },
-                extension: {
-                    required: "Obligatorio"
+                telefono: {
+                    required: "Obligatorio",
+                    digits:"Solo dígitos",
+                    maxlength: "Ingrese 10 dígitos",
+                    minlength: "Ingrese 10 dígitos",
                 },
-                celular: {
-                    required: "Obligatorio"
-                } */
             },
             rules: {
-                username: {
-                    required: true
-                },
-
-                password: {
-                    required: false
-                },
-                re_password: {
-                    required: false,
-                    equalTo: "#password"
+                numero_empleado: {
+                    required: true,
+                    digits: true,
+                    minlength: 8,
+                    maxlength:8
                 },
                 nombre: {
                     required: true
@@ -64,42 +81,40 @@ var FormValidation = function () {
                 apellidos: {
                     required: true
                 },
-                dependencia_id: {
+                cargo: {
                     required: true
+                },
+                dependencia_id: {
+                    required: true,
                 },
                 subdependencia_id: {
+                    required: true,
+                },
+                nombre: {
                     required: true
                 },
-                /*  tel_oficina: {
-                     required: false
-                 },
-                 extension: {
-                     required: false
-                 },
-                 celular: {
-                     required: false
-                 } */
+                apellidos: {
+                    required: true
+                },
+                jefe: {
+                    required: true
+                },
+                telefono: {
+                    required: true,
+                    digits: true,
+                    minlength: 10,
+                    maxlength:10
+                },
+
+                correo: {
+                    required: true
+                },
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
                 success1.hide();
                 error1.show();
             },
 
-            /*errorPlacement: function (error, element) { // render error placement for each input type
-                var icon = $(element).parent('.input-icon').children('i');
-                icon.removeClass('fa-check').addClass("fa-warning");
-                icon.attr("data-original-title", error.text()).tooltip({'container': 'body'});
-                error.insertAfter(element); // Mensaje del input error placement
-            },
-
-            highlight: function (element) { // hightlight error inputs
-                $(element)
-                    .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
-            },
-
-            unhighlight: function (element) { // revert the change done by hightlight
-
-            },*/
             errorPlacement: function (error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
@@ -134,15 +149,16 @@ var FormValidation = function () {
                     $("#btnSave").attr('disabled', 'true');
                 }
             },
-            url: url_route + '/usuarios/' + $('#id_registro').val(),
-            type: 'PUT',
-            data: $('#form1').serialize(),
+            url: url_route + '/inspectores/' + $('#id_registro').val(),
+            type: 'POST',
+            data:{ data:$('#form1').serialize(),
+                '_method':'PUT'
+            },
             success: function (response) {
-                console.log(response);
                 $("#btnSave").removeAttr('disabled');
                 if (response.success == true) {
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
-                        location.href = url_route + "/usuarios";
+                        //location.href = url_route + "/inspectores";
                     });
 
                 } else {
@@ -173,28 +189,7 @@ var FormValidation = function () {
 }();
 
 
-function selectDependencia() {
-    $.ajax({
-        url: '/usuarios/create/?act=1',
-        type: "GET",
-        dateType: 'json',
-        data: $('#form1').serialize(),
-    })
-        .done(function (response) {
-            if (response.success == true) {
-                /*   console.log('success');
-                  console.log(response.data); */
-                $('#subdependencia_id').empty();
-                $('#subdependencia_id').select2({
-                    data: response.data
-                });
-            }
-        }).fail(function (jqXHR, textStatus, error) {
-            console.log("Get error: " + error);
-        });
-}
-
-
 $(document).ready(function () {
     FormValidation.init();
+    selectDependencia();
 });

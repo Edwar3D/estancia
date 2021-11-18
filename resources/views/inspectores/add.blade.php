@@ -1,6 +1,7 @@
 @extends('layouts.admin_lte')
 @section('content_css')
     <link href="{{ asset('css/select2/select2.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/draggable.css') }}" rel="stylesheet" type="text/css">
 @stop
 @section('content')
     <section class="content-header">

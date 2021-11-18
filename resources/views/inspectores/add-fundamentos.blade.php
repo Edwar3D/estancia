@@ -1,48 +1,3 @@
-<style>
-    #modules {
-        height: 25pc;
-        padding: 20px;
-        background: #eee;
-        margin-bottom: 20px;
-        z-index: 1;
-        border-radius: 10px;
-        overflow: visible;
-    }
-
-    #dropzone {
-        padding: 20px;
-        background: #eee;
-        height: 25pc;
-        margin-bottom: 20px;
-        z-index: 0;
-        border-radius: 10px;
-    }
-
-    .active-zone {
-        outline: 1px solid red;
-    }
-
-    .hover {
-        outline: 1px solid blue;
-    }
-
-    .drop-item {
-        cursor: pointer;
-        margin-bottom: 10px;
-        background-color: rgb(255, 255, 255);
-        padding: 5px 10px;
-        border-radius: 5px;
-        border: 1px solid rgb(204, 204, 204);
-        position: relative;
-    }
-
-    .drop-item .remove {
-        position: absolute;
-        top: 4px;
-        right: 4px;
-    }
-
-</style>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -124,7 +79,6 @@
 
 @section('content_js')
     <script src="{{ asset('js/fundamentos-juridicos/fundamentos-inspectores.js') }}"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"
-        integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
+    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
     @parent
 @endsection

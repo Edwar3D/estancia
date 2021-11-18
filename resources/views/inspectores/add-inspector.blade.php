@@ -23,11 +23,6 @@
                                                         placeholder="13245678">
                                                     <span
                                                         class="glyphicon glyphicon-info-sign  form-control-feedback"></span>
-                                                        @if ($errors->has('password'))
-                                                            <span class="invalid-feedback help-block" role="alert">
-                                                                <strong>{{ $errors->first('password') }}</strong>
-                                                            </span>
-                                                        @endif
                                                 </div>
                                             </div>
                                             <div class="col-md-8">

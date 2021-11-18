@@ -91,7 +91,7 @@ function f_popup_info(url, title) { //Ver planilla
 
 function f_delete_row(url, title) { //Ver planilla
     bootbox.confirm({
-        message: "Deseas eliminar el usuario" + title + "?",
+        message: "Deseas eliminar el inspector " + title + "?",
         buttons: {
             confirm: {
                 label: 'Si',
@@ -115,9 +115,11 @@ function f_delete_row(url, title) { //Ver planilla
                         if (response.success == true) {
                             get_datosTablaIni();
                             bootbox.alert(response.message);
+                        }else{
+                            bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>"+ response.message +"</pre>");
                         }
                     }).fail(function (jqXHR, textStatus, error) {
-                        console.log("Post error: " + error);
+                        bootbox.alert("<strong>Ocurrio un error de Network. Intentalo de nuevo.</strong><br><br><pre>"+error+"</pre>");
                     });
             }
 
@@ -126,9 +128,11 @@ function f_delete_row(url, title) { //Ver planilla
 }
 
 function search() {
-    console.log(document.getElementById('search').value)
+    var cad = document.getElementById('search').value;
+    console.log(cad)
+    if(cad != '' || cad.length > 2)
     $.ajax({
-        url: '/inspectores?act=list&search=' + document.getElementById('search').value,
+        url: '/inspectores?act=list&search=' + cad,
         type: "GET",
         dateType: 'json',
     })

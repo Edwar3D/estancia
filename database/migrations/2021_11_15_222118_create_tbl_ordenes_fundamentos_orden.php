@@ -13,8 +13,8 @@ class CreateTblOrdenesFundamentosOrden extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_ordenes_fundamentos_orden', function (Blueprint $table) {
-            $table->foreignId('inspector_id')->constrained('tbl_inspectores');
+        Schema::create('tbl_ordenes_fundamentos_ordenes', function (Blueprint $table) {
+            $table->foreignId('orden_id')->constrained('tbl_ordenes');
             $table->foreignId('fundamento_id')->constrained('tbl_fundamentos_orden');
             $table->timestamps();
         });

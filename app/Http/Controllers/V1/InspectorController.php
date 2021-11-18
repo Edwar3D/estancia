@@ -26,9 +26,17 @@ class InspectorController extends Controller
         } else {
             if ($request['search'] == '') {
                 $search = '';
-                $inspectores = Inspector::with('dependencia')->with('areaadministrativa')->where('dependencia_id', '=', Auth::user()->dependencia_id)->paginate(100);
+                $inspectores = Inspector::with('dependencia')->with('areaadministrativa')
+                ->where('estado_actual','=',1)
+                ->where('dependencia_id', '=', Auth::user()->dependencia_id)
+                ->paginate(100);
             } else {
-                $inspectores = Inspector::with('dependencia')->with('areaadministrativa')->where('dependencia_id', '=', Auth::user()->dependencia_id)->where('numero_empleado', 'like', "%{$request['search']}%")->paginate(100);
+                $inspectores = Inspector::with('dependencia')->with('areaadministrativa')
+                ->where('estado_actual','=',1)
+                ->where('dependencia_id', '=', Auth::user()->dependencia_id)
+                ->where('numero_empleado', 'like', "%{$request['search']}%")
+                ->orwhere('nombre', 'like', "%{$request['search']}%")
+                ->orwhere('apellidos', 'like', "%{$request['search']}%")->paginate(100);
                 $search = $request['search'];
             }
 
@@ -49,10 +57,9 @@ class InspectorController extends Controller
     public function create(Request $request)
     {
         $dependencia_items = Dependencia::where('subdependencia', '=', 0)->get();
-        $subdependencias = Dependencia::where('subdependencia', '=', 1)->where('parent_id', '=', Auth::user()->dependencia_id)->get();
         $cargos = Cargo::get();
         $fundamentos = FundamentoJuridico::get();
-        return view('inspectores.add', compact('cargos', 'subdependencias', 'dependencia_items', 'fundamentos'));
+        return view('inspectores.add', compact('cargos', 'dependencia_items', 'fundamentos'));
     }
 
     /**
@@ -114,11 +121,10 @@ class InspectorController extends Controller
      */
     public function edit($id)
     {
-
-        $inspector = Inspector::with('dependencia')->with('areaadministrativa')->find($id);
-        $subdependencias = Dependencia::where('subdependencia', '=', 1)->where('parent_id', '=', $inspector->dependencia_id)->get();
+        $dependencia_items = Dependencia::where('subdependencia', '=', 0)->get();
+        $inspector = Inspector::with('dependencia')->with('areaadministrativa')->with('fundamentos')->find($id);
         $cargos = Cargo::get();
-        return view('inspectores.edit', compact('inspector', 'cargos', 'subdependencias'));
+        return view('inspectores.edit', compact('inspector', 'cargos', 'dependencia_items'));
     }
 
     /**
@@ -128,9 +134,33 @@ class InspectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id,Request $request)
     {
-        //
+        try {
+            $inspector = Inspector::find($id);
+            if($request["foto_perfil"] != null){
+                $data = file_get_contents($request["foto_perfil"]);
+                $inspector->foto  = 'data:image/png;base64,' . base64_encode($data);
+            }
+
+            $inspector->numero_empleado =  $request["numero_empleado"];
+            $inspector->nombre =  $request["nombre"];
+            $inspector->apellidos =  $request["apellidos"];
+            $inspector->cargo_id =  $request["cargo"];
+            $inspector->dependencia_id = $request["dependencia_id"];
+            $inspector->area_administrativa =  $request["subdependencia_id"];
+            $inspector->jefe =  $request["jefe"];
+            $inspector->email =  $request["correo"];
+            $inspector->telefono =  $request["telefono"];
+            $inspector->user_updated = Auth::user()->id;
+            $inspector->updated_at =  date('Y-m-d H:i:s');
+
+            $inspector->save();
+            $message = 'Datos del inspector actualizado';
+            return ['success' => true,'message' => $message,'re'=>$request->all()];
+        } catch (\Exception $e) {
+            return ['success' => false,'message' => $e,'re'=>$request->all()];
+        }
     }
 
     /**
@@ -141,6 +171,21 @@ class InspectorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $obj_tabla = Inspector::find($id);
+
+            $obj_tabla->estado_actual = 0;
+            $obj_tabla->updated_at =  date('Y-m-d H:i:s');
+            $obj_tabla->user_updated = Auth::user()->id;
+
+            $obj_tabla->save();
+            $message = 'Inspector Eliminado';
+        return ['success' => true,'message' => $message];
+        } catch(\Exception $e){
+           // do task when error
+           //return $e->getMessage();   // insert query
+            //return "Error al Guardar los datos";
+            return ['success' => false,'message' => $e->getMessage()];
+        }
     }
 }

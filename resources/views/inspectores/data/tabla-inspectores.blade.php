@@ -46,7 +46,7 @@
                                             Editar
                                         </a>
                                         <a class="dropdown-item" href="javascript:;"
-                                            onclick="f_delete_row('usuarios/@php echo $inspect->id @endphp','{{ $inspect->username }}');">
+                                            onclick="f_delete_row('{{route('inspectores.destroy',[$inspect->id ])}}','{{ $inspect->nombre }}');">
                                             <i class="fas fa-trash"></i>
                                             Eliminar</a>
                                     </div>

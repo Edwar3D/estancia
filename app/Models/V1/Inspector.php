@@ -23,7 +23,9 @@ class Inspector extends Model
         return $this->hasMany(Orden::class);
     }
     public function fundamentos(){
-        return $this->belongsToMany(FundamentoJuridico::class, 'tbl_fundamentos_inspectores','fundamento_id','inspector_id');
+        return $this->belongsToMany(FundamentoJuridico::class, 'tbl_fundamentos_inspectores','fundamento_id','inspector_id')
+        ->withPivot('fundamento_id', 'inspector_id')
+        ->withTimestamps();
     }
 
 }
