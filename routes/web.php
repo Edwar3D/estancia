@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\DocumentoOrdenController;
 use App\Models\V1\FundamentoJuridico;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -50,18 +51,31 @@ Route::group(['middleware'=>'auth'], function () {
         'edit','update'
     ]);
 
-    //MODULO DE DEPENDENCIA
+
     Route::get('/dependencia/inicio', 'ModuloDependencia@index')->name('dependencia.home');
 
     Route::resource('inspectores', V1\InspectorController::class)->only([
         'index', 'create','show','store','edit','update','destroy',
     ]);
 
+    Route::resource('ordenes', V1\OrdenController::class)->only([
+        'index', 'create','show','store','edit','update','destroy',
+    ]);
+
     //fundamentos juridicos de inspectores
     Route::post('fundamentosInspectores/addFundamentosInspector', 'V1\FundamentoInspectorController@addFundamentosInspector')->name('addFundamentosInspector');
+
     Route::resource('fundamentosInspectores', V1\FundamentoInspectorController::class)->only([
         'index','store'
     ]);
+    //fundamentos jurificos de Ordenes
+    Route::post('fundamentosOrdenes/addFundamentosOrden', 'V1\FundamentoOrdenController@addFundamentosOrden')->name('addFundamentosOrden');
+
+    Route::resource('fundamentosOrdenes', V1\FundamentoOrdenController::class)->only([
+        'index','store','addFundamentosOrden'
+    ]);
+    //subir archivos
+    Route::post('subirAchivo','V1\DocumentoOrdenController@store')->name('subirArchivo');
 
 });
 

@@ -47,7 +47,7 @@ class tbl_menusSeeder extends Seeder
         //3
         DB::table('tbl_menus')->insert([
             'menu' => 'Inspecciones',
-            'clave' => 'inspecciones',
+            'clave' => 'ordenes',
             'ver'=>1,
             'agregar'=>1,
             'editar'=>1,

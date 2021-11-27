@@ -16,7 +16,11 @@ function selectDependencia() {
                 if($('#id_areaAdmin').val() != ''){
                     $('#subdependencia_id').val($('#id_areaAdmin').val());
                     $('#subdependencia_id').trigger('change');
+                }else{
+                    $('#subdependencia_id').val($('').val());
+                    $('#subdependencia_id').trigger('change');
                 }
+
             }
         }).fail(function(jqXHR, textStatus, error) {
             console.log("Get error: " + error);

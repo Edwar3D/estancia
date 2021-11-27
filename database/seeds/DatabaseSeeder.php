@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(tbl_inspectoresSeeder::class);
 
         //Ordenes
-        //$this->call(tbl_zonasSeeder::class);
+        $this->call(tbl_zonasSeeder::class);
         //$this->call(tbl_ordenesSeeder::class);
 
     }

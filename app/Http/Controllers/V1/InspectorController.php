@@ -108,9 +108,30 @@ class InspectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id,Request $request)
+    {   try {
+        $html = '';
+        $opc = '';
+
+        $inspector = Inspector::with('cargo')->with('dependencia')->with('areaadministrativa')->find($id);
+
+        if( $request['request']['opc'] == 'preview'){
+            $opc = 'preview';
+            $html = view('ordenes.data.preview-inspector', compact('inspector'))->render();
+        }
+
+        $response = [
+            'success'=> true,
+            'opc'=>'preview',
+            'html' => $html,
+        ];
+
+        } catch (\Exception $e) {
+            $response = [
+                'success'=> false,];
+        }
+
+        return response()->json($response);
     }
 
     /**

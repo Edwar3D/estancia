@@ -71,7 +71,7 @@ var handleValidation2 = function () {
                     $("#btnNewFundamento").attr('disabled', 'true');
                 }
             },
-            url: url_route + '/fundamentosInspectores',
+            url: url_route + '/fundamentosOrdenes',
             type: 'post',
             data: $('#formFundamentos').serialize(),
             success: function (response) {
@@ -111,7 +111,7 @@ var handleValidation2 = function () {
 //obtener todos los fundamentos registrados
 function fundamentos() {
     $.ajax({
-        url: '/fundamentosInspectores/',
+        url: '/fundamentosOrdenes/',
         type: "GET",
         dateType: 'json',
         data: { sid: Math.random() }
@@ -175,22 +175,22 @@ function iniciarDraggable() {
 }
 
 function cancelFundamentos() {
-    bootbox.alert("<strong>Cancelar Registro</strong><br><br><pre>El inspector se quedará sin fundamentos Juridcos</pre>");
+    bootbox.alert("<strong>Cancelar Registro</strong><br><br><pre>La orden se quedará sin fundamentos Juridcos</pre>");
 }
 
 function SaveFundamentos() {
-    if ($('#id_inspector').val() == '') {
-        bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>Hubo un probelma al relacionar los fundamentos con el inspector </pre>");
+    if ($('#id_orden').val() == '') {
+        bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>Hubo un probelma al relacionar los fundamentos con la orden </pre>");
     } else if (fundamentosSeleccionados.length == 0) {
         bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>Seleccione al menos un fundamento para guardar</pre>");
     } else {
         $.ajax({
-            url: '/fundamentosInspectores/addFundamentosInspector',
+            url: '/fundamentosOrdenes/addFundamentosOrden',
             type: "POST",
             dateType: 'json',
             data: {
                 "request": {
-                    "inspector": $('#id_inspector').val(),
+                    "id_orden": $('#id_orden').val(),
                     "fundamentos": fundamentosSeleccionados,
                 }
             },
@@ -199,7 +199,7 @@ function SaveFundamentos() {
                 //console.log(response)
                 if (response.success == true) {
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
-                        location.href = url_route + "/inspectores";
+                        //location.href = url_route + "/inspectores";
                     });
                 } else {
                     bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>" + response.message + "</pre>");
