@@ -16,7 +16,6 @@ class CreateTblFundamentosInspectores extends Migration
         Schema::create('tbl_fundamentos_inspectores', function (Blueprint $table) {
             $table->foreignId('fundamento_id')->constrained('tbl_fundamentos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('inspector_id')->constrained('tbl_inspectores')->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamps();
         });
     }
 

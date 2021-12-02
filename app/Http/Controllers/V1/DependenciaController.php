@@ -58,7 +58,6 @@ class DependenciaController extends Controller
             $new_dependencia->telefono = $request["telefono"];
             $new_dependencia->ext = $request["ext"];
             $new_dependencia->email = $request["correo"];
-
             if($request["dependencia_id"] == 0 || $request["dependencia_id"] == ''){
                 $new_dependencia->parent_id = null;
                 $new_dependencia->subdependencia= 0;
@@ -66,7 +65,6 @@ class DependenciaController extends Controller
                 $new_dependencia->subdependencia = 1;
                 $new_dependencia->parent_id = $request["dependencia_id"];
             }
-
             $new_dependencia->nivel = 0;
             $new_dependencia->estatus = 1;
             $new_dependencia->user_created = Auth::user()->id;
@@ -121,7 +119,6 @@ class DependenciaController extends Controller
             $dependecia->telefono = $request["telefono"];
             $dependecia->ext = $request["ext"];
             $dependecia->email = $request["correo"];
-
             if($request["dependencia_id"] == 0 || $request["dependencia_id"] == ''){
                 $dependecia->parent_id = null;
                 $dependecia->subdependencia= 0;
@@ -129,7 +126,6 @@ class DependenciaController extends Controller
                 $dependecia->subdependencia = 1;
                 $dependecia->parent_id = $request["dependencia_id"];
             }
-
             $dependecia->nivel = 0;
             $dependecia->estatus = 1;
             $dependecia->user_updated = Auth::user()->id;

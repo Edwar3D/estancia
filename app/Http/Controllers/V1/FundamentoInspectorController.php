@@ -15,7 +15,6 @@ class FundamentoInspectorController extends Controller
         $fundamentos = FundamentoJuridico::get();
         $response=[
             'success'=> true,
-            'de'=>0,
             'data' => $fundamentos,
         ];
         return response()->json($response);
@@ -23,8 +22,13 @@ class FundamentoInspectorController extends Controller
 
     public function getByInspector($id){
         //devolver los fundamentos de un inspector
-        $fundamentosInspector = FundamentoInspector::select('fundamneto_id')->where('inspector_id','=',$id)->get();
-        return response()->json($fundamentosInspector);
+        try{
+            $fundamentosInspector = FundamentoInspector::select('fundamento_id as ID')->where('inspector_id','=',$id)->get();
+            return ['success' => true,'data' => $fundamentosInspector];
+        }catch(\Exception $e){
+            return ['success' => false,'data' => $e->getMessage()];
+        }
+       
     }
 
     public function store (Request $request){
@@ -46,7 +50,7 @@ class FundamentoInspectorController extends Controller
         try{
             $inspector = Inspector::find($request['request']['inspector']);
              foreach ($request['request']['fundamentos'] as $key => $value) {
-                $inspector->fundamentos()->attach( $inspector->id,['fundamento_id'=> $value]);
+                $inspector->fundamentos()->sync(['fundamento_id'=> $value]);
             }
             $message = 'Almacenado con éxito';
             return ['success' => true,'message' => $message];

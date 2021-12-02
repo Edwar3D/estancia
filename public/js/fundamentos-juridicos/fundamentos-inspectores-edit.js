@@ -1,7 +1,7 @@
 'use strict';
 
 var fundamentosSeleccionados = [];
-
+var fundamentosInspector = []
 var handleValidation2 = function () {
 
     var handleValidation = function () {
@@ -110,6 +110,7 @@ var handleValidation2 = function () {
 
 //obtener todos los fundamentos registrados
 function fundamentos() {
+    console.log("selec",fundamentosSeleccionados)
     $.ajax({
         url: '/fundamentosInspectores/',
         type: "GET",
@@ -118,13 +119,41 @@ function fundamentos() {
     })
         .done(function (response) {
             if (response.success == true) {
+                  $('#modules').empty();
+                   $('#dropzone').empty();
                 response.data.forEach(fundamento => {
-                    var $el = '<div class="drag drop-item " id="' + fundamento.id + '">' +
+                    //se crea el elemento de fundamentos disponibles
+                     var $el = '<div class="drag drop-item " id="' + fundamento.id + '">' +
                         '<div><span>' + fundamento.fundamento + '</span>' +
                         '<p><a href="' + fundamento.url + '" class="text-secondary font-italic" target="_blank">' +
                         fundamento.url + '</a></p>' +
                         '</div> </div>';
-                    $('#modules').append($el);
+                        $('#modules').append($el);
+                    //se verifica si no esta relacionado con el inspector    
+                    if(fundamentosInspector.includes(fundamento.id) || fundamentosSeleccionados.includes(fundamento.id) ){
+                        console.log('truee')
+                        //se inicializa como un elemento seleccionado
+                        var element = $('#' + fundamento.id);
+                        fundamentosSeleccionados.push(fundamento.id);
+
+
+                        var $selected = $('<div class="drop-item">' + fundamento.fundamento +
+                            '<div><p><a href="' + fundamento.url + '" class="text-secondary font-italic" target="_blank">' +
+                            fundamento.url + '</a></p></div></div>'
+                        );
+                        $selected.append($(
+                            '<button type="button" class="btn btn-danger btn-xs remove my-auto"><i class="fas fa-times"></i></button>'
+                        ).click(function () {
+                            $(this).parent().detach();
+                            element.show("linear");
+                            var indice = fundamentosSeleccionados.indexOf(fundamento.id); 
+                            fundamentosSeleccionados.splice(indice, 1);
+                        }));
+                        
+                        $('#dropzone').append($selected);
+                        element.hide("linear");
+                    }
+                   
                 });
                 iniciarDraggable();
             }
@@ -146,7 +175,7 @@ function iniciarDraggable() {
         accept: ":not(.ui-sortable-helper)",
         drop: function (e, ui) {
             var element = $('#' + ui.draggable.attr('id'));
-            fundamentosSeleccionados.push(ui.draggable.attr('id'));
+            fundamentosSeleccionados.push( parseInt( ui.draggable.attr('id') ) );
 
             var $el = $('<div class="drop-item">' + element.find('span').text() +
                 '<div><p><a href="' + element.find('a').text() + '" class="text-secondary font-italic" target="_blank">' +
@@ -195,7 +224,6 @@ function SaveFundamentos() {
             },
         })
             .done(function (response) {
-                //console.log(response)
                 if (response.success == true) {
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
                         location.href = url_route + "/inspectores";
@@ -209,9 +237,33 @@ function SaveFundamentos() {
     }
 }
 
+
+function getFundamentosInpector() {
+    $.ajax({
+            url: '/fundamentosInspectores/getByInspector/'+$('#id_inspector').val(),
+            type: "GET",
+            dateType: 'json',
+            data: {},
+        })
+        .done(function(response) {
+            if(response.success == true){
+                  response.data.forEach(fundamento => {
+                    fundamentosInspector.push(fundamento.ID);
+                  });
+            }else{
+                 bootbox.alert("<strong>Ocurrio un error al cargar los datos.</strong><br><br><pre>" + response.message + "</pre>");
+            }
+            
+        }).fail(function(jqXHR, textStatus, error) {
+            console.log("Get error: " + error);
+        });
+}
+
 $(document).ready(function () {
     handleValidation2.init();
+    getFundamentosInpector();
     fundamentos();
+    console.log("init", fundamentosSeleccionados)
 });
 
 
