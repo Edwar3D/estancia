@@ -110,7 +110,6 @@ var handleValidation2 = function () {
 
 //obtener todos los fundamentos registrados
 function fundamentos() {
-    console.log("selec",fundamentosSeleccionados)
     $.ajax({
         url: '/fundamentosInspectores/',
         type: "GET",
@@ -203,7 +202,9 @@ function iniciarDraggable() {
 }
 
 function cancelFundamentos() {
-    bootbox.alert("<strong>Cancelar Registro</strong><br><br><pre>El inspector se quedará sin fundamentos Juridcos</pre>");
+    bootbox.alert("<strong>Cancelar Actilización</strong><br><br><pre>los cambios en los fundamentos Juridcos no se guardarán</pre>", function (){
+          location.href = url_route + "/inspectores";
+    });
 }
 
 function SaveFundamentos() {
@@ -213,7 +214,7 @@ function SaveFundamentos() {
         bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>Seleccione al menos un fundamento para guardar</pre>");
     } else {
         $.ajax({
-            url: '/fundamentosInspectores/addFundamentosInspector',
+            url: '/fundamentosInspectores/updateFundamentosInspector',
             type: "POST",
             dateType: 'json',
             data: {
@@ -263,7 +264,6 @@ $(document).ready(function () {
     handleValidation2.init();
     getFundamentosInpector();
     fundamentos();
-    console.log("init", fundamentosSeleccionados)
 });
 
 

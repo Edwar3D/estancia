@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="box-footer text-center">
-                            <input type="" name="id_inspector" id="id_inspector" value={{$inspector->id}} disabled>
+                            <input type="hidden" name="id_inspector" id="id_inspector" value={{$inspector->id}} disabled>
                             <button type="button" id="btnCancelFundamentos" class="btn btn-default"
                                 onclick="cancelFundamentos()">Cancelar</button>
                             <button type="submit" id="btnSaveFundamentos" name="btnSave"

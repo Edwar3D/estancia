@@ -162,7 +162,7 @@ var FormValidation = function () {
                 $("#btnSave").removeAttr('disabled');
                 if (response.success == true) {
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
-                        //location.href = url_route + "/inspectores";
+                        $("#nav-fudamentos-tab").click();
                     });
 
                 } else {

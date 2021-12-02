@@ -66,6 +66,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::post('fundamentosInspectores/addFundamentosInspector', 'V1\FundamentoInspectorController@addFundamentosInspector')->name('addFundamentosInspector');
     //fundamentos jurificos de Ordenes de un inspector
     Route::get('fundamentosInspectores/getByInspector/{id?}', 'V1\FundamentoInspectorController@getByInspector')->name('getByInspector');
+    Route::post('fundamentosInspectores/updateFundamentosInspector', 'V1\FundamentoInspectorController@updateFundamentosInspector')->name('updateFundamentosInspector');
+    
     Route::resource('fundamentosInspectores', V1\FundamentoInspectorController::class)->only([
         'index','store'
     ]);

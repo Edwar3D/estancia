@@ -50,9 +50,21 @@ class FundamentoInspectorController extends Controller
         try{
             $inspector = Inspector::find($request['request']['inspector']);
              foreach ($request['request']['fundamentos'] as $key => $value) {
-                $inspector->fundamentos()->sync(['fundamento_id'=> $value]);
+                $inspector->fundamentos()->attach( $inspector->id,['fundamento_id'=> $value]);
             }
             $message = 'Almacenado con éxito';
+            return ['success' => true,'message' => $message];
+        } catch(\Exception $e){
+            return ['success' => false,'message' => $e->getMessage()];
+        }
+    }
+
+    public function updateFundamentosInspector (Request $request){
+        //registrar fundamentos junto con el inspector
+        try{
+            $inspector = Inspector::find($request['request']['inspector']);
+            $inspector->fundamentos()->sync($request['request']['fundamentos']);
+            $message = 'Datos actualizados con éxito';
             return ['success' => true,'message' => $message];
         } catch(\Exception $e){
             return ['success' => false,'message' => $e->getMessage()];
