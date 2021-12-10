@@ -22,8 +22,8 @@ class CreateTblDocumentosOrden extends Migration
         Schema::create('tbl_documentos_orden', function (Blueprint $table) {
             $table->id();
             $table->text('url');
-            $table->foreignId('tipo_id')->constrained('tbl_tipos_documentos');
-
+            $table->foreignId('tipo_id')->constrained('tbl_tipos_documentos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('orden_id')->constrained('tbl_ordenes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

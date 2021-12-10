@@ -1,5 +1,5 @@
 'use strict';
-var FormValidation = function () {
+var FormValidationOrder = function () {
 
     var handleValidation1 = function() {
 
@@ -108,9 +108,11 @@ var FormValidation = function () {
                     if(response.success==true)
                     {
                          bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>"+response.message+"</pre>", function(){
-                           /*  location.href =url_route+"/ordenes"; */
+                            $("#nav-fundamentos-tab").trigger("click");
+                            $("#btnCancel").prop("disabled", true);
+                            $("#id_orden").val(response.idOrden);
+                            $("#idOrden2").val(response.idOrden);
                         });
-                        $("#id_orden").val(response.idOrden);
 
                     }else
                     {
@@ -125,8 +127,6 @@ var FormValidation = function () {
             };
 
             $('#formOrden').ajaxForm(formOpciones);
-
-
     }
 
 
@@ -135,7 +135,6 @@ var FormValidation = function () {
         init: function () {
             handleValidation1();
             handleSubmit1();
-
         }
 
     };
@@ -196,7 +195,8 @@ $(document).ready(function(){
         }).fail(function(jqXHR, textStatus, error) {
             $('#preview-inespctor').html('<h6>Hubo un error al cargar la información</h6>');
         });
-    FormValidation.init();
+
+    FormValidationOrder.init();
 
 });
 

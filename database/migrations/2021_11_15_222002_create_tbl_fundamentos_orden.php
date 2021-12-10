@@ -28,6 +28,7 @@ class CreateTblFundamentosOrden extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_fundamentos_orden');
     }
 }

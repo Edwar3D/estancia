@@ -5,11 +5,12 @@ namespace App\Http\Controllers\V1;
 use App\Models\V1\Orden;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\V1\DocumentoOrden;
 use App\Models\V1\Inspector;
+use App\Models\V1\tipoDocumento;
 use App\Models\V1\TipoInspeccion;
 use App\Models\V1\Zona;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Support\Facades\Auth;
 
 class OrdenController extends Controller
@@ -29,12 +30,26 @@ class OrdenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+
         $tiposInspeccion = TipoInspeccion::get();
         $zonas = Zona::get();
+        $tiposDocumento = tipoDocumento::get();
+
+        if (isset($request["request"]['id_orden']))
+            $documentosSubidos = DocumentoOrden::where('orden_id', '=', $request['request']['id_orden'])->orderBy('tipo_id', 'DESC')->get();
+        else
+            $documentosSubidos = [];
+        //dd($request->all());
         $inspectores = Inspector::where('dependencia_id', '=', Auth::user()->dependencia_id)->get();
-        return view('ordenes.add',compact('tiposInspeccion','zonas','inspectores'));
+        if (isset($request["request"]['id_orden'])){
+            return response()->json([
+                'success' => true,
+                'HTML' => view('ordenes.add-documentos',compact('tiposDocumento','documentosSubidos'))->render()
+            ]);
+        }else
+            return view('ordenes.add', compact('tiposInspeccion', 'zonas', 'inspectores', 'tiposDocumento', 'documentosSubidos'));
     }
 
     /**
@@ -50,7 +65,7 @@ class OrdenController extends Controller
             $newOrden = new Orden;
             $newOrden->folio = $request["folio"];
             $newOrden->direccion = $request["direccion"];
-            $newOrden->fecha = Carbon::createFromFormat( 'd/m/Y', $request["fecha"]);
+            $newOrden->fecha = Carbon::createFromFormat('d/m/Y', $request["fecha"]);
             $newOrden->tipo_id = $request["tipo"];
             $newOrden->zona_id = $request["zona"];
             $newOrden->inspector_id = $request["inspector_id"];
@@ -69,7 +84,6 @@ class OrdenController extends Controller
         } catch (\Exception $th) {
             return ['success' => false, 'message' => $th->getMessage()];
         }
-
     }
 
     /**
@@ -78,9 +92,17 @@ class OrdenController extends Controller
      * @param  \App\Orden  $orden
      * @return \Illuminate\Http\Response
      */
-    public function show(Orden $orden)
+    public function show($id)
     {
-        //
+        try {
+            $orden = Orden::find($id);
+            return  [
+                'success' => true,
+                'data' => $orden
+            ];
+        } catch (\Exception $e) {
+            return  ['success' => false];
+        }
     }
 
     /**

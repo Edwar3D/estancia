@@ -49,9 +49,9 @@
                                                                     aria-controls="nav-inspector" aria-selected="true">
                                                                     Orden de inspección
                                                                 </a>
-                                                                <a class="nav-link" id="nav-fudamentos-tab"
-                                                                    data-toggle="tab" href="#nav-fudamentos" role="tab"
-                                                                    aria-controls="nav-fudamentos" aria-selected="false">
+                                                                <a class="nav-link" id="nav-fundamentos-tab"
+                                                                    data-toggle="tab" href="#nav-fundamentos" role="tab"
+                                                                    aria-controls="nav-fundamentos" aria-selected="false">
                                                                     Fundamentos Jurídicos
                                                                 </a>
                                                                 <a class="nav-link" id="nav-documentacion-tab"
@@ -66,8 +66,8 @@
                                                         <div class="tab-pane fade show active" id="nav-inspector"
                                                             role="tabpanel" aria-labelledby="nav-inspector-tab">
                                                             @include('ordenes.add-orden')</div>
-                                                        <div class="tab-pane fade" id="nav-fudamentos" role="tabpanel"
-                                                            aria-labelledby="nav-fudamentos-tab">
+                                                        <div class="tab-pane fade" id="nav-fundamentos" role="tabpanel"
+                                                            aria-labelledby="nav-fundamentos-tab">
                                                             @include('ordenes.add-fundamentos')
                                                         </div>
                                                         <div class="tab-pane fade" id="nav-documentacion" role="tabpanel"

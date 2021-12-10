@@ -14,9 +14,8 @@ class CreateTblOrdenesFundamentosOrden extends Migration
     public function up()
     {
         Schema::create('tbl_ordenes_fundamentos_ordenes', function (Blueprint $table) {
-            $table->foreignId('orden_id')->constrained('tbl_ordenes');
-            $table->foreignId('fundamento_id')->constrained('tbl_fundamentos_orden');
-            $table->timestamps();
+            $table->foreignId('orden_id')->constrained('tbl_ordenes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('fundamento_id')->constrained('tbl_fundamentos_orden')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateTblOrdenesFundamentosOrden extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_ordenes_fundamentos_orden');
+        Schema::dropIfExists('tbl_ordenes_fundamentos_ordenes');
     }
 }

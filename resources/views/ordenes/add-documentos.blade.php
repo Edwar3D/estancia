@@ -1,66 +1,70 @@
-<section class="content">
+<section class="content" id="content-add-doc">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="container-fluid">
                     <!-- /.card-header -->
-
                     <div class="card-body">
-
                         <div class="conatiner-fluid">
 
-
-                            <form method="POST" action="{{route('subirArchivo')}}" class="col-12" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group has-feedback">
-                                            <label>Tipo de docuemento:</label>
-                                            <select class="form-control select2" style="width: 100%;" id="tipo"
-                                                name="tipo" tabindex="Tipo de inspeccion">
-                                                {{-- @foreach ($inspectores as $item)
-                                                <option value="{{ $item->id }}">
-                                                    {{ $item->nombre }} {{ $item->apellidos }}
-                                                </option>
-                                            @endforeach --}}
-                                            </select>
-                                            <span class="glyphicon glyphicon-info-sign  form-control-feedback"></span>
+                            @foreach ($tiposDocumento as $item)
+                                <form id="formFile{{ $item->id }}" class="col-12 formFile"
+                                    enctype="multipart/form-data">
+                                    <input class="form-control" type="tipo" name="tipo" value={{ $item->id }}
+                                        hidden>
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group has-feedback">
+                                                <label>Tipo de documento:</label>
+                                                <p class="font-weight-700"> {{ $item->tipo }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="form-group has-feedback">
-                                            <label>Folio:</label>
-                                            <div class="custom-file">
-                                                <input class="form-control form-control-sm" id="file"  name="file" type="file"  accept="application/pdf" required>
-                                                <span class="glyphicon glyphicon-info-sign  form-control-feedback">
 
+                                        <div class="col-md-8">
+                                            <label >Archivo:</label>
+                                            <div class="form-group has-feedback input-group">
+                                                <input class="form-control form-control-sm" id="file" name="file"
+                                                    type="file" accept="application/pdf" required>
+                                                <span class="glyphicon glyphicon-info-sign  form-control-feedback">
                                                 </span>
+                                                <div class="input-group-append">
+
+                                                    <button type="submit" id="btnUpload{{ $item->id }}"
+                                                        class="btn btn-outline-primary  btn-sm btnUpload t"
+                                                        onclick="upload({{ $item->id }})">
+                                                        <span id="spinner{{ $item->id }}"
+                                                            class="spinner-border spinner-border-sm" role="status"
+                                                            aria-hidden="true" hidden></span>
+                                                        Subir
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="box-footer text-center m-3">
-                                    <button type="submit" id="btnSave" name="btnSave"
-                                        class="btn btn-info pull-right ml-2">Subir</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div>
+                                </form>
+                            @endforeach
+                            <textarea name="" id="" cols="30" rows="10">
+                                @foreach ($documentosSubidos as $doc)
+                                    {{$doc}}
+                                @endforeach
+                            </textarea>
 
+                            {{-- <div class="row">
+                                <div class="col-md-1">
+                                    <img src="{{ asset('img/pdf_icon.png') }}" class="mx-3" width="50px"
+                                        height="50px" alt="">
+                                </div>
+                                <div class="col-md-3 pl-5">
+                                    <a class="btn btn-danger btn-xs remove my-auto ">
+                                        Eliminar</a>
+                                    <a class="btn btn-primary btn-xs remove my-auto ">
+                                        Visualizar</a>
+                                </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 </section>
-
-@section('content_js')
-    <script type="text/javascript">
-        @parent
-        $(function() {
-            $("#file").on('change', function(event) {
-                var file = event.target.files[0];
-
-            });
-        });
-    </script>
-@stop

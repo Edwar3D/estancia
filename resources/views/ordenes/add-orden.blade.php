@@ -17,6 +17,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <form id="formOrden" name="formOrden">
+                            @csrf
                             <section class="row">
                                 <div class="col-md-6">
                                     <div class="row">
@@ -34,7 +35,8 @@
                                             <div class="form-group  has-feedback">
                                                 <label>Fecha de inspeccion</label>
                                                 <input class="form-control" type="text" id="fecha" name="fecha" />
-                                                <span class="glyphicon glyphicon-info-sign  form-control-feedback"></span>
+                                                <span
+                                                    class="glyphicon glyphicon-info-sign  form-control-feedback"></span>
                                             </div>
                                         </div>
 
@@ -43,9 +45,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tipo de inspeccion</label>
-                                            <select class="form-control select2" style="width: 100%;"
-                                                id="tipo" name="tipo"
-                                                tabindex="Tipo de inspeccion">
+                                            <select class="form-control select2" style="width: 100%;" id="tipo"
+                                                name="tipo" tabindex="Tipo de inspeccion">
                                                 @foreach ($tiposInspeccion as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->tipo }}
@@ -102,15 +103,9 @@
                                 </div>
                             </section>
 
-                            {{-- <div class="custom-file my-3 form-group has-feedback col-md-6">
-                                        <input type="file" class="custom-file-input" id="documento" name="documento"
-                                            accept="application/pdf" required>
-                                        <label class="custom-file-label" for="documento">Selecione el documento</label>
-                                        <span class="glyphicon glyphicon-info-sign  form-control-feedback"></span>
-                                    </div> --}}
                             <div class="box-footer text-center m-3">
                                 <button type="button" id="btnCancel"
-                                    onclick="window.location.href='{{ url('/inspectores') }}'"
+                                    onclick="window.location.href='{{ url('/ordenes') }}'"
                                     class="btn btn-default mr-1">Cancelar</button>
                                 <button type="submit" id="btnSave" name="btnSave"
                                     class="btn btn-info pull-right ml-2">Guardar</button>
@@ -134,13 +129,14 @@
     <script src="{{ asset('js/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/jquery.form.js') }}"></script>
 
-    <script src="{{ asset('js/fundamentos-juridicos/fundamentos-ordenes.js')}}"></script>
-    <script src="{{ asset('js/jquery-ui.min.js')}}" ></script>
+    <script src="{{ asset('js/fundamentos-juridicos/fundamentos-ordenes.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/ordenes/ordenes-add.js') }}"></script>
+    <script src="{{ asset('js/ordenes/subir-archivos.js') }}"></script>
     <script>
         $(function() {
             //Initialize Select2 Elements
-            $(".select2").select2().val("");
+            $(".select2").select2().val();
         });
     </script>
 @stop

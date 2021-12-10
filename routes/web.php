@@ -67,19 +67,20 @@ Route::group(['middleware'=>'auth'], function () {
     //fundamentos jurificos de Ordenes de un inspector
     Route::get('fundamentosInspectores/getByInspector/{id?}', 'V1\FundamentoInspectorController@getByInspector')->name('getByInspector');
     Route::post('fundamentosInspectores/updateFundamentosInspector', 'V1\FundamentoInspectorController@updateFundamentosInspector')->name('updateFundamentosInspector');
-    
+
     Route::resource('fundamentosInspectores', V1\FundamentoInspectorController::class)->only([
         'index','store'
     ]);
 
     //fundamentos jurificos de Ordenes
     Route::post('fundamentosOrdenes/addFundamentosOrden', 'V1\FundamentoOrdenController@addFundamentosOrden')->name('addFundamentosOrden');
-    
+
     Route::resource('fundamentosOrdenes', V1\FundamentoOrdenController::class)->only([
-        'index','store','addFundamentosOrden'
+        'index','store']);
+    //subir archivos de Ordenes
+    Route::resource('subirAchivo',V1\DocumentoOrdenController::class)->only([
+        'index','store'
     ]);
-    //subir archivos
-    Route::post('subirAchivo','V1\DocumentoOrdenController@store')->name('subirArchivo');
 
 });
 

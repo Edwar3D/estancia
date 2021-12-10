@@ -20,13 +20,13 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <h6 class="h6">Fundamentos Jurídicos para el Inspector:</h6>
+                                    <h6 class="h6">Fundamentos Jurídicos para la orden de inspección:</h6>
                                     <div id="dropzone" class="overflow-auto"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="box-footer text-center">
-                            <input  name="id_orden" id="id_orden" disabled>
+                            <input  name="id_orden" id="id_orden" disabled hidden>
                             <button type="button" id="btnCancelFundamentos" class="btn btn-default"
                                 onclick="cancelFundamentos()">Cancelar</button>
                             <button type="submit" id="btnSaveFundamentos" name="btnSave"
