@@ -5,8 +5,7 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Models\V1\Dependencia;
 use Illuminate\Http\Request;
-use Auth;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class DependenciaController extends Controller
 {
@@ -17,14 +16,14 @@ class DependenciaController extends Controller
      */
     public function index(Request $request)
     {
-        if(!isset($request["act"])){
+        if (!isset($request["act"])) {
             return view('dependencias.list');
-        } else{
-            $datosTabla = Dependencia::where('estatus','=',1)->paginate(100);
+        } else {
+            $datosTabla = Dependencia::where('estatus', '=', 1)->paginate(100);
             $datosTabla->withPath('depedencias.list');
-            $response=[
-                'success'=> true,
-                'html' => view('dependencias.data.list-tabla-dependencias',compact('datosTabla'))->render()
+            $response = [
+                'success' => true,
+                'html' => view('dependencias.data.list-tabla-dependencias', compact('datosTabla'))->render()
             ];
 
             return response()->json($response);
@@ -38,7 +37,7 @@ class DependenciaController extends Controller
      */
     public function create()
     {
-        $dependencia_items = Dependencia::where('id','>', 0)->where('subdependencia','=',0)->get();
+        $dependencia_items = Dependencia::where('id', '>', 0)->where('subdependencia', '=', 0)->get();
         return view('dependencias.add', compact('dependencia_items'));
     }
 
@@ -50,7 +49,7 @@ class DependenciaController extends Controller
      */
     public function store(Request $request)
     {
-     try {
+        try {
             $new_dependencia = new Dependencia;
             $new_dependencia->dependencia = $request["nombre"];
             $new_dependencia->responsable = $request["responsable"];
@@ -58,10 +57,10 @@ class DependenciaController extends Controller
             $new_dependencia->telefono = $request["telefono"];
             $new_dependencia->ext = $request["ext"];
             $new_dependencia->email = $request["correo"];
-            if($request["dependencia_id"] == 0 || $request["dependencia_id"] == ''){
+            if ($request["dependencia_id"] == 0 || $request["dependencia_id"] == '') {
                 $new_dependencia->parent_id = null;
-                $new_dependencia->subdependencia= 0;
-            }else{
+                $new_dependencia->subdependencia = 0;
+            } else {
                 $new_dependencia->subdependencia = 1;
                 $new_dependencia->parent_id = $request["dependencia_id"];
             }
@@ -71,10 +70,18 @@ class DependenciaController extends Controller
             $new_dependencia->user_updated = Auth::user()->id;
             $new_dependencia->save();
             $message = 'Almacenado con éxito';
-        return ['success' => true,'message' => $message];
-        } catch(\Exception $e){
-            return ['success' => false,'message' => $e->getMessage()];
+            $response = [
+                'success' => true,
+                'message' => $message
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+
+        return response()->json($response);
     }
 
     /**
@@ -96,9 +103,9 @@ class DependenciaController extends Controller
      */
     public function edit($id)
     {
-        $dependencia_items = Dependencia::where('subdependencia','=',0)->where('id','!=',$id)->get();
+        $dependencia_items = Dependencia::where('subdependencia', '=', 0)->where('id', '!=', $id)->get();
         $dependencia = Dependencia::find($id);
-        return view('dependencias.edit', compact('dependencia','dependencia_items'));
+        return view('dependencias.edit', compact('dependencia', 'dependencia_items'));
     }
 
     /**
@@ -110,7 +117,7 @@ class DependenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $dependecia = Dependencia::find($id);
 
             $dependecia->dependencia = $request["nombre"];
@@ -119,10 +126,10 @@ class DependenciaController extends Controller
             $dependecia->telefono = $request["telefono"];
             $dependecia->ext = $request["ext"];
             $dependecia->email = $request["correo"];
-            if($request["dependencia_id"] == 0 || $request["dependencia_id"] == ''){
+            if ($request["dependencia_id"] == 0 || $request["dependencia_id"] == '') {
                 $dependecia->parent_id = null;
-                $dependecia->subdependencia= 0;
-            }else{
+                $dependecia->subdependencia = 0;
+            } else {
                 $dependecia->subdependencia = 1;
                 $dependecia->parent_id = $request["dependencia_id"];
             }
@@ -133,10 +140,17 @@ class DependenciaController extends Controller
 
             $dependecia->save();
             $message = 'Actualización Exitosa';
-            return ['success' => true,'message' => $message];
-        }catch(\Exception $e){
-            return ['success' => false,'message' => $e->getMessage()];
+            $response = [
+                'success' => true,
+                'message' => $message
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+        return response()->json($response);
     }
 
     /**
@@ -156,13 +170,19 @@ class DependenciaController extends Controller
 
             $dependecia->save();
             $message = 'Dependencia Eliminado';
-        return ['success' => true,'message' => $message];
-        } catch(\Exception $e){
-           // do task when error
-           //return $e->getMessage();   // insert query
+            $response = [
+                'success' => true,
+                'message' => $message
+            ];
+        } catch (\Exception $e) {
+            // do task when error
+            //return $e->getMessage();   // insert query
             //return "Error al Guardar los datos";
-            return ['success' => false,'message' => $e->getMessage()];
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+        return response()->json($response);
     }
-
 }

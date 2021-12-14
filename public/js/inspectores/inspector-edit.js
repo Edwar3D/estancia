@@ -36,10 +36,10 @@ var FormValidation = function () {
         var success1 = $('.alert-success', form1);
 
         form1.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-block help-block-error', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",  // validate all fields including form hidden input
+            errorElement: 'span',
+            errorClass: 'help-block help-block-error',
+            focusInvalid: false,
+            ignore: "",
             messages: {
                 numero_empleado: {
                     required: "Obligatorio"
@@ -114,7 +114,7 @@ var FormValidation = function () {
                     required: true
                 },
             },
-            invalidHandler: function (event, validator) { //display error alert on form submit
+            invalidHandler: function (event, validator) {
                 success1.hide();
                 error1.show();
             },
@@ -132,7 +132,7 @@ var FormValidation = function () {
 
             success: function (label, element) {
                 var icon = $(element).parent('.input-icon').children('i');
-                $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
                 icon.removeClass("fa-warning").addClass("fa-check");
             }
 
@@ -181,7 +181,7 @@ var FormValidation = function () {
 
 
     return {
-        //main function to initiate the module
+
         init: function () {
             handleValidation1();
             handleSubmit1();

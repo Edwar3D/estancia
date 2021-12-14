@@ -11,20 +11,22 @@ use App\Models\V1\Orden;
 class FundamentoOrdenController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         //devolver todos los fundamentos de las ordenes
         $fundamentos = FundamentoOrden::get();
-        $response=[
-            'success'=> true,
-            'data' => $fundamentos,
+        $response = [
+            'success' => true,
+            'data' => $fundamentos
         ];
         return response()->json($response);
     }
 
 
-    public function store (Request $request){
+    public function store(Request $request)
+    {
         //agregar un nuevo fundamento
-        try{
+        try {
             $newFundamento =  new FundamentoOrden;
             $newFundamento->fundamento =  $request['fundamento'];
             $newFundamento->url =  $request['url'];
@@ -33,9 +35,9 @@ class FundamentoOrdenController extends Controller
             $response = [
                 'success' => true,
                 'message' => $message,
-                'data'=> $newFundamento
+                'data' => $newFundamento
             ];
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             $response = [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -44,27 +46,43 @@ class FundamentoOrdenController extends Controller
         return response()->json($response);
     }
 
-    public function addFundamentosOrden (Request $request){
+    public function addFundamentosOrden(Request $request)
+    {
         //registrar fundamentos junto con el inspector
-        try{
+        try {
             $orden = Orden::find($request['request']['id_orden']);
-             foreach ($request['request']['fundamentos'] as $key => $value) {
-                $orden->fundamentos()->attach( $orden->id,['fundamento_id'=> $value]);
+            foreach ($request['request']['fundamentos'] as $key => $value) {
+                $orden->fundamentos()->attach($orden->id, ['fundamento_id' => $value]);
             }
             $message = 'Almacenado con éxito';
-            return ['success' => true,'message' => $message];
-        } catch(\Exception $e){
-            return ['success' => false,'message' => $e->getMessage()];
+            $response = [
+                'success' => true,
+                'message' => $message
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+        return response()->json($response);
     }
 
-    public function getFundamentosByOrden($id){
+    public function getFundamentosByOrden($id)
+    {
         //devolver los fundamentos de una orden
-        try{
-            $fundamentosOrden = FundamentosOrden::where('orden_id','=',$id);
-            return ['success' => true,'data' => $fundamentosOrden];
-        }catch(\Exception $e){
-            return ['success' => false,'data' => $e->getMessage()];
+        try {
+            $fundamentosOrden = FundamentosOrden::where('orden_id', '=', $id);
+            $response = [
+                'success' => true,
+                'data' => $fundamentosOrden
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'data' => $e->getMessage()
+            ];
         }
+        return response()->json($response);
     }
 }

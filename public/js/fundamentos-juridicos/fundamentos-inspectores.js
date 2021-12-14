@@ -22,7 +22,7 @@ var handleValidation2 = function () {
                 url: {
                     required: "Obligatorio",
                     url: "Asegurese de ser una URL"
-                },
+                }
             },
             rules: {
                 fundamento: {
@@ -31,7 +31,7 @@ var handleValidation2 = function () {
                 url: {
                     required: true,
                     url: true
-                },
+                }
             },
             invalidHandler: function (event, validator) {
                 success1.hide();
@@ -197,7 +197,7 @@ function SaveFundamentos() {
             },
         })
             .done(function (response) {
-                //console.log(response)
+
                 if (response.success == true) {
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
                         location.href = url_route + "/inspectores";

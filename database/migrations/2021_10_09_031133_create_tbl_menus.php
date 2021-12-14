@@ -25,7 +25,6 @@ class CreateTblMenus extends Migration
             $table->integer('exportar')->default(0)->nullable();
             $table->integer('validar')->default(0)->nullable();
             $table->integer('estatus')->default(0)->nullable();
-           /*  $table->integer('parent_id')->default(0); */
             $table->foreignId('parentid', 'fk_tbl_menus_tbl_menus')->nullable()->constrained('tbl_menus');
             $table->integer('sub_menu')->default(0)->nullable();
             $table->string('descripcion',120)->nullable();

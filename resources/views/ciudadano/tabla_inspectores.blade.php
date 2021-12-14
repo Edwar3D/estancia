@@ -19,7 +19,7 @@
                                 <th scope="col">Nombre del inspector</th>
                                 <th scope="col">Cargo</th>
                                 <th scope="col">Dependencia</th>
-                                <th scope="col">inspecciones</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,16 +42,9 @@
                                     </td>
                                     <td>
                                         <!-- Button modal -->
-                                        <a type="button" class="btn btn-link" data-toggle="modal"
-                                            data-target="#inspeccionesModal{{ $inspect->id }}">
-                                            Ver
+                                        <a href="{{ route('ciudadano.verInspector', [$inspect->id]) }}">
+                                            <i class="far fa-arrow-alt-circle-right text-success"></i>
                                         </a>
-                                        <!-- Modal -->
-                                        <x-modal-inspecciones idInspector="{{ $inspect->id }}"
-                                            nombreInspector="{{ $inspect->nombre }}">
-                                            <h5 class="modal-title text-center col-11" id="inspeccionesModalLabel">
-                                                {{ $inspect->nombre }}</h5>
-                                        </x-modal-inspecciones>
                                     </td>
                                 </tr>
                             @endforeach

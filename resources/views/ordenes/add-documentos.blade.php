@@ -22,7 +22,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group has-feedback">
                                                 <label>Tipo de documento:</label>
-                                                <p class="font-weight-700"> {{ $item->tipo }}</p>
+                                                <p > {{ $item->tipo }}</p>
                                             </div>
                                         </div>
 

@@ -17,7 +17,7 @@
             <dt class="col-sm-12 control-label font-weight-700">Cargo:</dt>
             <dd class="col-sm-12 font-weight-normal">{{ $$inspector->cargo->cargo ?? ''}}</dd>
 
-            <dt class="col-sm-12  control-label font-weight-700">Unidad Administrativa:</dt>
+            <dt class="col-sm-12  control-label font-weight-700">Áre Administrativa:</dt>
             <dd class="col-sm-12  font-weight-normal">{{ $inspector->areaadminitrativa->dependencia ?? 'No encontrado' }}</dd>
 
             <dt class="col-sm-12  control-label font-weight-700">Teléfono:</dt>

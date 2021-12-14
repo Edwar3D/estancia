@@ -19,7 +19,7 @@
         <div class="form-inline col-md-6 justify-content-center mt-sm-3  mt-md-0">
             <input id="search" name="search" class="form-control col-6 mr-1" type="search"
                 placeholder="Nombre del inspector" value="@php echo $request['search'] ?? '' @endphp">
-            <button class="btn btn-outline-success mr-2" type="submit">
+            <button class="btn btn-outline-success mr-2 rounded-pill border-0" type="submit">
                 <i class="fas fa-search"></i>
             </button>
             <a onclick="ver()" id="btn-clean" href="{{ route('ciudadano') }}" type="button"

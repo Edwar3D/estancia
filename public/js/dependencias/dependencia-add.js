@@ -32,7 +32,7 @@ var FormValidation = function () {
                 },
                 telefono: {
                     required: "Obligatorio",
-                },
+                }
             },
             rules: {
                 nombre: {
@@ -56,7 +56,7 @@ var FormValidation = function () {
                     digits: true,
                     minlength: 10,
                     maxlength:10
-                },
+                }
             },
             invalidHandler: function (event, validator) {
                 success1.hide();
@@ -99,7 +99,6 @@ var FormValidation = function () {
             type: 'post',
             data: $('#form').serialize(),
             success: function (response) {
-                console.log(response);
                 $("#btnSave").removeAttr('disabled');
                 if (response.success == true) {
 

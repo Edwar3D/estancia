@@ -22,7 +22,7 @@ class OrdenController extends Controller
      */
     public function index()
     {
-        $ordenes =  Orden::where('dependencia_id','=',Auth::user()->id)->orderBy('fecha', 'DESC')->get();
+        $ordenes =  Orden::where('dependencia_id', '=', Auth::user()->id)->orderBy('fecha', 'DESC')->get();
         return view('ordenes.list');
     }
 
@@ -37,20 +37,9 @@ class OrdenController extends Controller
         $tiposInspeccion = TipoInspeccion::get();
         $zonas = Zona::get();
         $tiposDocumento = tipoDocumento::get();
-
-        if (isset($request["request"]['id_orden']))
-            $documentosSubidos = DocumentoOrden::where('orden_id', '=', $request['request']['id_orden'])->get();
-        else
-            $documentosSubidos = [];
-        //dd($request->all());
         $inspectores = Inspector::where('dependencia_id', '=', Auth::user()->dependencia_id)->get();
-        if (isset($request["request"]['id_orden'])){
-            return response()->json([
-                'success' => true,
-                'HTML' => view('ordenes.add-documentos',compact('tiposDocumento','documentosSubidos'))->render()
-            ]);
-        }else
-            return view('ordenes.add', compact('tiposInspeccion', 'zonas', 'inspectores', 'tiposDocumento', 'documentosSubidos'));
+
+        return view('ordenes.add', compact('tiposInspeccion', 'zonas', 'inspectores', 'tiposDocumento'));
     }
 
     /**
@@ -77,14 +66,18 @@ class OrdenController extends Controller
             $newOrden->save();
 
             $message = 'Almacenado con éxito';
-            return [
+            $response = [
                 'success' => true,
                 'message' => $message,
                 'idOrden' => $newOrden->id,
             ];
         } catch (\Exception $th) {
-            return ['success' => false, 'message' => $th->getMessage()];
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage()
+            ];
         }
+        return response()->json($response);
     }
 
     /**

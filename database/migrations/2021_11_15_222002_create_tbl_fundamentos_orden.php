@@ -17,7 +17,6 @@ class CreateTblFundamentosOrden extends Migration
             $table->id();
             $table->text('fundamento');
             $table->text('url');
-            $table->timestamps();
         });
     }
 

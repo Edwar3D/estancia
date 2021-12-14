@@ -94,11 +94,11 @@
                                                 <input type="hidden" id="id_areaAdmin" name="id_areaAdmin"
                                                     value="@php echo $inspector->area_administrativa ?? '' @endphp" disabled>
                                                 <div class="form-group has-feedback">
-                                                    <label>Unidad Administrativa</label>
+                                                    <label>Área Administrativa</label>
                                                     <select class="form-control select2" style="width: 100%;"
                                                         id="subdependencia_id" name="subdependencia_id">
                                                         <option value="">
-                                                            Unidad Administrativa
+                                                            Área Administrativa
                                                         </option>
                                                     </select>
                                                     <span

@@ -90,11 +90,11 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group has-feedback">
-                                                    <label>Unidad Administrativa</label>
+                                                    <label>Área Administrativa</label>
                                                     <select class="form-control select2" style="width: 100%;"
                                                         id="subdependencia_id" name="subdependencia_id">
                                                         <option value="" selected>
-                                                            Unidad Administrativa
+                                                            Área Administrativa
                                                         </option>
                                                     </select>
                                                     <span

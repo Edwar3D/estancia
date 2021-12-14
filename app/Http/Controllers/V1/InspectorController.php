@@ -27,16 +27,16 @@ class InspectorController extends Controller
             if ($request['search'] == '') {
                 $search = '';
                 $inspectores = Inspector::with('dependencia')->with('areaadministrativa')
-                ->where('estado_actual','=',1)
-                ->where('dependencia_id', '=', Auth::user()->dependencia_id)
-                ->paginate(100);
+                    ->where('estado_actual', '=', 1)
+                    ->where('dependencia_id', '=', Auth::user()->dependencia_id)
+                    ->paginate(100);
             } else {
                 $inspectores = Inspector::with('dependencia')->with('areaadministrativa')
-                ->where('estado_actual','=',1)
-                ->where('dependencia_id', '=', Auth::user()->dependencia_id)
-                ->where('numero_empleado', 'like', "%{$request['search']}%")
-                ->orwhere('nombre', 'like', "%{$request['search']}%")
-                ->orwhere('apellidos', 'like', "%{$request['search']}%")->paginate(100);
+                    ->where('estado_actual', '=', 1)
+                    ->where('dependencia_id', '=', Auth::user()->dependencia_id)
+                    ->where('numero_empleado', 'like', "%{$request['search']}%")
+                    ->orwhere('nombre', 'like', "%{$request['search']}%")
+                    ->orwhere('apellidos', 'like', "%{$request['search']}%")->paginate(100);
                 $search = $request['search'];
             }
 
@@ -92,14 +92,18 @@ class InspectorController extends Controller
             $newInspector->estado_actual =  1;
             $newInspector->save();
             $message = 'Almacenado con éxito';
-            return [
+            $response = [
                 'success' => true,
                 'message' => $message,
                 'id' => $newInspector->id
             ];
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+        return response()->json($response);
     }
 
     /**
@@ -108,27 +112,28 @@ class InspectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,Request $request)
-    {   try {
-        $html = '';
-        $opc = '';
+    public function show($id, Request $request)
+    {
+        try {
+            $html = '';
+            $opc = '';
 
-        $inspector = Inspector::with('cargo')->with('dependencia')->with('areaadministrativa')->find($id);
+            $inspector = Inspector::with('cargo')->with('dependencia')->with('areaadministrativa')->find($id);
 
-        if( $request['request']['opc'] == 'preview'){
-            $opc = 'preview';
-            $html = view('ordenes.data.preview-inspector', compact('inspector'))->render();
-        }
+            if ($request['request']['opc'] == 'preview') {
+                $opc = 'preview';
+                $html = view('ordenes.data.preview-inspector', compact('inspector'))->render();
+            }
 
-        $response = [
-            'success'=> true,
-            'opc'=>'preview',
-            'html' => $html,
-        ];
-
+            $response = [
+                'success' => true,
+                'opc' => 'preview',
+                'html' => $html,
+            ];
         } catch (\Exception $e) {
             $response = [
-                'success'=> false,];
+                'success' => false,
+            ];
         }
 
         return response()->json($response);
@@ -155,11 +160,11 @@ class InspectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id,Request $request)
+    public function update($id, Request $request)
     {
         try {
             $inspector = Inspector::find($id);
-            if($request["foto_perfil"] != null){
+            if ($request["foto_perfil"] != null) {
                 $data = file_get_contents($request["foto_perfil"]);
                 $inspector->foto  = 'data:image/png;base64,' . base64_encode($data);
             }
@@ -178,10 +183,20 @@ class InspectorController extends Controller
 
             $inspector->save();
             $message = 'Datos del inspector actualizado';
-            return ['success' => true,'message' => $message,'re'=>$request->all()];
+            $response = [
+                'success' => true,
+                'message' => $message,
+                're' => $request->all()
+            ];
         } catch (\Exception $e) {
-            return ['success' => false,'message' => $e,'re'=>$request->all()];
+            $response = [
+                'success' => false,
+                'message' => $e,
+                're' => $request->all()
+            ];
         }
+
+        return response()->json($response);
     }
 
     /**
@@ -201,12 +216,17 @@ class InspectorController extends Controller
 
             $obj_tabla->save();
             $message = 'Inspector Eliminado';
-        return ['success' => true,'message' => $message];
-        } catch(\Exception $e){
-           // do task when error
-           //return $e->getMessage();   // insert query
-            //return "Error al Guardar los datos";
-            return ['success' => false,'message' => $e->getMessage()];
+            $response = [
+                'success' => true,
+                'message' => $message
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+
+        return response()->json($response);
     }
 }

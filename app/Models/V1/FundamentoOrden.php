@@ -11,7 +11,6 @@ class FundamentoOrden extends Model
     public function ordenes(){
         return $this->belongsToMany(Orden::class,'tbl_ordenes_fundamentos_ordenes',
         'orden_id','fundamento_id')
-        ->wherePivot('orden_id','fundamentos_id')
-        ->withTimestamps();
+        ->wherePivot('orden_id','fundamentos_id');
     }
 }

@@ -15,7 +15,6 @@ var FormValidation = function () {
                 messages: {
                     numero_empleado: {
                         required: "Obligatorio"
-
                     },
                     nombre: {
                         required: "Obligatorio"
@@ -49,7 +48,7 @@ var FormValidation = function () {
                     numero_empleado: {
                         required: true,
                         digits: true,
-                        minlength: 8,
+                        minlength: 3,
                         maxlength:8
                     },
                     nombre: {
@@ -188,8 +187,6 @@ function selectDependencia() {
         })
         .done(function(response) {
             if (response.success == true) {
-                /*   console.log('success');
-                  console.log(response.data); */
                 $('#subdependencia_id').empty();
                 $('#subdependencia_id').select2({
                     data: response.data

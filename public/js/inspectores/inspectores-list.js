@@ -31,9 +31,9 @@ $(function () {
 function get_datosTabla(page) {
     $.ajax({
         url: 'inspectores?act=list&page=' + page,
-        type: "GET", //GET,POST,PUT,DELETE
+        type: "GET",
         dateType: 'json',
-        //data:$formFiltro.serialize()
+
         data: { sid: Math.random() }
 
     })
@@ -47,10 +47,10 @@ function get_datosTabla(page) {
 }
 
 function get_datosTablaIni() {
-    //loader("block");
+
     $.ajax({
         url: 'inspectores/?act=list',
-        type: "GET",//GET,POST,PUT,DELETE
+        type: "GET",
         dateType: 'json',
         data: { sid: Math.random() }
     })
@@ -64,7 +64,7 @@ function get_datosTablaIni() {
 }
 
 
-function f_popup_info(url, title) { //Ver planilla
+function f_popup_info(url, title) {
     $("#ModalTitleInfo").html(title);
     $.ajax({
         type: "GET",
@@ -73,12 +73,11 @@ function f_popup_info(url, title) { //Ver planilla
         data: { sid: Math.random() },
         async: false,
         success: function (datos) {
-            //alert("Datos Info"+datos);
 
             $("#ModalBody").html(datos);
-            //$('#ModalInfo').modal('show');
+
             $('#ModalInfo').modal('toggle');
-            //alert(lat+"/"+lng)
+
         },
         timeout: 60000,
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -89,7 +88,7 @@ function f_popup_info(url, title) { //Ver planilla
 }
 
 
-function f_delete_row(url, title) { //Ver planilla
+function f_delete_row(url, title) {
     bootbox.confirm({
         message: "Deseas eliminar el inspector " + title + "?",
         buttons: {
@@ -107,7 +106,7 @@ function f_delete_row(url, title) { //Ver planilla
             if (result == true) {
                 $.ajax({
                     url: url,
-                    type: "delete",//GET,POST,PUT,DELETE
+                    type: "delete",
                     dateType: 'json',
                     data: { sid: Math.random() }
                 })

@@ -24,9 +24,15 @@ class FundamentoInspectorController extends Controller
         //devolver los fundamentos de un inspector
         try{
             $fundamentosInspector = FundamentosInspector::select('fundamento_id as ID')->where('inspector_id','=',$id)->get();
-            return ['success' => true,'data' => $fundamentosInspector];
+            return [
+                'success' => true,
+                'data' => $fundamentosInspector
+            ];
         }catch(\Exception $e){
-            return ['success' => false,'data' => $e->getMessage()];
+            return [
+                'success' => false,
+                'data' => $e->getMessage()
+            ];
         }
 
     }
@@ -39,9 +45,15 @@ class FundamentoInspectorController extends Controller
             $newFundamento->url =  $request["url"];
             $newFundamento->save();
             $message = 'Almacenado con éxito';
-            return ['success' => true,'message' => $message];
+            return [
+                'success' => true,
+                'message' => $message
+            ];
         } catch(\Exception $e){
-            return ['success' => false,'message' => $e->getMessage()];
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
     }
 
@@ -53,9 +65,15 @@ class FundamentoInspectorController extends Controller
                 $inspector->fundamentos()->attach( $inspector->id,['fundamento_id'=> $value]);
             }
             $message = 'Almacenado con éxito';
-            return ['success' => true,'message' => $message];
+            return [
+                'success' => true,
+                'message' => $message
+            ];
         } catch(\Exception $e){
-            return ['success' => false,'message' => $e->getMessage()];
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
     }
 
@@ -65,9 +83,15 @@ class FundamentoInspectorController extends Controller
             $inspector = Inspector::find($request['request']['inspector']);
             $inspector->fundamentos()->sync($request['request']['fundamentos']);
             $message = 'Datos actualizados con éxito';
-            return ['success' => true,'message' => $message];
+            return [
+                'success' => true,
+                'message' => $message
+            ];
         } catch(\Exception $e){
-            return ['success' => false,'message' => $e->getMessage()];
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
     }
 }

@@ -32,7 +32,7 @@ var FormValidation = function () {
                 },
                 telefono: {
                     required: "Obligatorio",
-                },
+                }
             },
             rules: {
                 nombre: {
@@ -56,7 +56,7 @@ var FormValidation = function () {
                     digits: true,
                     minlength: 10,
                     maxlength: 10
-                },
+                }
 
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
@@ -103,7 +103,6 @@ var FormValidation = function () {
             type: 'PUT',
             data: $('#form').serialize(),
             success: function (response) {
-                //console.log(response);
                 $("#btnSave").removeAttr('disabled');
                 if (response.success == true) {
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
@@ -113,10 +112,6 @@ var FormValidation = function () {
                 } else {
                     bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>" + response.message + "</pre>");
                 }
-
-
-
-
             },
             timeout: 60000,
             error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -31,13 +31,4 @@ class Dependencia extends Model
         return $this->hasMany(Inspector::class);
     }
 
-    /*  public function reportes()
-    {
-        return $this->hasMany(Reportes::class);
-    }
-
-    public function servicios()
-    {
-        return $this->hasMany(Servicios::class);
-    } */
 }

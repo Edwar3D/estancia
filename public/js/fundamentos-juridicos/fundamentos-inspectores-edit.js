@@ -22,7 +22,7 @@ var handleValidation2 = function () {
                 url: {
                     required: "Obligatorio",
                     url: "Asegurese de ser una URL"
-                },
+                }
             },
             rules: {
                 fundamento: {
@@ -31,7 +31,7 @@ var handleValidation2 = function () {
                 url: {
                     required: true,
                     url: true
-                },
+                }
             },
             invalidHandler: function (event, validator) {
                 success1.hide();
@@ -118,18 +118,18 @@ function fundamentos() {
     })
         .done(function (response) {
             if (response.success == true) {
-                  $('#modules').empty();
-                   $('#dropzone').empty();
+                $('#modules').empty();
+                $('#dropzone').empty();
                 response.data.forEach(fundamento => {
                     //se crea el elemento de fundamentos disponibles
-                     var $el = '<div class="drag drop-item " id="' + fundamento.id + '">' +
+                    var $el = '<div class="drag drop-item " id="' + fundamento.id + '">' +
                         '<div><span>' + fundamento.fundamento + '</span>' +
                         '<p><a href="' + fundamento.url + '" class="text-secondary font-italic" target="_blank">' +
                         fundamento.url + '</a></p>' +
                         '</div> </div>';
-                        $('#modules').append($el);
-                    //se verifica si no esta relacionado con el inspector    
-                    if(fundamentosInspector.includes(fundamento.id) || fundamentosSeleccionados.includes(fundamento.id) ){
+                    $('#modules').append($el);
+                    //se verifica si no esta relacionado con el inspector
+                    if (fundamentosInspector.includes(fundamento.id) || fundamentosSeleccionados.includes(fundamento.id)) {
                         console.log('truee')
                         //se inicializa como un elemento seleccionado
                         var element = $('#' + fundamento.id);
@@ -145,14 +145,14 @@ function fundamentos() {
                         ).click(function () {
                             $(this).parent().detach();
                             element.show("linear");
-                            var indice = fundamentosSeleccionados.indexOf(fundamento.id); 
+                            var indice = fundamentosSeleccionados.indexOf(fundamento.id);
                             fundamentosSeleccionados.splice(indice, 1);
                         }));
-                        
+
                         $('#dropzone').append($selected);
                         element.hide("linear");
                     }
-                   
+
                 });
                 iniciarDraggable();
             }
@@ -174,7 +174,7 @@ function iniciarDraggable() {
         accept: ":not(.ui-sortable-helper)",
         drop: function (e, ui) {
             var element = $('#' + ui.draggable.attr('id'));
-            fundamentosSeleccionados.push( parseInt( ui.draggable.attr('id') ) );
+            fundamentosSeleccionados.push(parseInt(ui.draggable.attr('id')));
 
             var $el = $('<div class="drop-item">' + element.find('span').text() +
                 '<div><p><a href="' + element.find('a').text() + '" class="text-secondary font-italic" target="_blank">' +
@@ -202,8 +202,8 @@ function iniciarDraggable() {
 }
 
 function cancelFundamentos() {
-    bootbox.alert("<strong>Cancelar Actilización</strong><br><br><pre>los cambios en los fundamentos Juridcos no se guardarán</pre>", function (){
-          location.href = url_route + "/inspectores";
+    bootbox.alert("<strong>Cancelar Actilización</strong><br><br><pre>los cambios en los fundamentos Juridcos no se guardarán</pre>", function () {
+        location.href = url_route + "/inspectores";
     });
 }
 
@@ -241,21 +241,21 @@ function SaveFundamentos() {
 
 function getFundamentosInpector() {
     $.ajax({
-            url: '/fundamentosInspectores/getByInspector/'+$('#id_inspector').val(),
-            type: "GET",
-            dateType: 'json',
-            data: {},
-        })
-        .done(function(response) {
-            if(response.success == true){
-                  response.data.forEach(fundamento => {
+        url: '/fundamentosInspectores/getByInspector/' + $('#id_inspector').val(),
+        type: "GET",
+        dateType: 'json',
+        data: {},
+    })
+        .done(function (response) {
+            if (response.success == true) {
+                response.data.forEach(fundamento => {
                     fundamentosInspector.push(fundamento.ID);
-                  });
-            }else{
-                 bootbox.alert("<strong>Ocurrio un error al cargar los datos.</strong><br><br><pre>" + response.message + "</pre>");
+                });
+            } else {
+                bootbox.alert("<strong>Ocurrio un error al cargar los datos.</strong><br><br><pre>" + response.message + "</pre>");
             }
-            
-        }).fail(function(jqXHR, textStatus, error) {
+
+        }).fail(function (jqXHR, textStatus, error) {
             console.log("Get error: " + error);
         });
 }

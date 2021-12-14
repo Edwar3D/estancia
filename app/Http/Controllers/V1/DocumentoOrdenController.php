@@ -19,7 +19,6 @@ class DocumentoOrdenController extends Controller
                 $orden = $orden->last()->id;
                 //nombre del archivo orden_id+tipo_doc+nombreDoc
                 $path = $request->file('file')->storeAs('ordenes-documentos', $orden . $request["tipo"] . $request->file('file')->getClientOriginalName(), 'public');
-                //$storage = Storage::path('public\\'. $path );
 
                 $newDoc = new DocumentoOrden;
                 $newDoc->tipo_id = $request["tipo"];
@@ -28,23 +27,25 @@ class DocumentoOrdenController extends Controller
 
                 $newDoc->save();
 
-                return response()->json([
+                $response = [
                     'success' => true,
                     'message' => 'Archivo almacenado con éxito',
                     'data' => $newDoc->id
-                ]);
+                ];
             } else {
-                return response()->json([
+                $response = [
                     'success' => false,
                     'message' => 'Archivo No encontrado'
-                ]);
+                ];
             }
         } catch (\Exception $e) {
-            return response()->json([
+            $response = [
                 'success' => false,
                 'message' => $e->getMessage()
-            ]);
+            ];
         }
+
+        return response()->json($response);
     }
 
 
@@ -54,16 +55,17 @@ class DocumentoOrdenController extends Controller
             $doc = DocumentoOrden::find($id);
             Storage::delete('public/' . $doc->url);
             $message = 'Archivo eliminado';
-            return [
+            $response = [
                 'success' => true,
                 'message' => $message,
             ];
         } catch (\Exception $e) {
-            return [
+            $response = [
                 'success' => false,
                 'message' => $e->getMessage()
             ];
         }
+        return response()->json($response);
     }
 
     public function show($id)

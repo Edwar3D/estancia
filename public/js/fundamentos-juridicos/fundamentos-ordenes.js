@@ -120,8 +120,7 @@ function fundamentosInit() {
                 response.data.forEach(fundamento => {
                     fundamentosSeleccionados.push(fundamento.ID);
                 });
-            } else
-                console.log(response)
+            }
         }).fail(function (jqXHR, textStatus, error) {
             console.log("Post error: " + error);
         });
@@ -220,10 +219,10 @@ function SaveFundamentos() {
             },
         })
             .done(function (response) {
-                //console.log(response)
+
                 if (response.success == true) {
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
-                        //location.href = url_route + "/inspectores";
+
                         $("#nav-documentacion-tab").click()
                     });
                 } else {
