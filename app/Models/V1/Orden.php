@@ -18,4 +18,20 @@ class Orden extends Model
         return $this->hasMany(DocumentoOrden::class);
     }
 
+    public function estatus(){
+        return $this->belongsTo(Estatus::class,'estatus_id');
+    }
+
+    public function tipo(){
+        return $this->belongsTo(TipoInspeccion::class,'tipo_id');
+    }
+
+    public function dependencia (){
+        return $this->belongsTo(Dependencia::class, 'dependencia_id');
+    }
+
+    public function zona(){
+        return $this->belongsTo(Zona::class, 'zona_id');
+    }
+
 }

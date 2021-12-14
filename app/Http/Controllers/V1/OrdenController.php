@@ -20,10 +20,19 @@ class OrdenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ordenes =  Orden::where('dependencia_id', '=', Auth::user()->id)->orderBy('fecha', 'DESC')->get();
-        return view('ordenes.list');
+        if (!isset($request["act"])) {
+            return view('ordenes.list');
+        } else {
+            $ordenes =  Orden::with('estatus')
+                    ->where('dependencia_id', '=', Auth::user()->dependencia_id)->orderBy('fecha', 'DESC')->paginate(100);
+            $response = [
+                'success' => true,
+                'html' => view('ordenes.data.tabla-ordenes', compact('ordenes'))->render()
+            ];
+            return response()->json($response);
+        }
     }
 
     /**

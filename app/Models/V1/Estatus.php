@@ -8,12 +8,12 @@ class Estatus extends Model
 {
     //
 
-    protected $table = 'users_estatus';
+    protected $table = 'tbl_estatus_ordenes';
     public $timestamps= false;
 
 
     public function estatus()
     {
-        return $this->hasMany(Usuario::class);
+        return $this->hasMany(Orden::class);
     }
 }

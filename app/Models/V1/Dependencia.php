@@ -31,4 +31,8 @@ class Dependencia extends Model
         return $this->hasMany(Inspector::class);
     }
 
+    public function ordenes(){
+        return $this->hasMany(Orden::class);
+    }
+
 }

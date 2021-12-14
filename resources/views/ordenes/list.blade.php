@@ -33,7 +33,7 @@
                 </div>
               </div>
               <div class="card-body">
-               {{--  <div id="datosTabla" class="box-body table-both-scroll"></div> --}}
+                <div id="datosTabla" class="box-body table-both-scroll"></div>
               </div>
 
             </div>
@@ -42,29 +42,8 @@
       </div>
     </section>
 @stop
-@section('content_modals')
-    <div class="modal fade" id="ModalInfo"  tabindex="-1" role="basic" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" id="ModalTitleInfo">Formulario</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div id="ModalBody">
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-@stop
+
 @section('content_js')
 <script src="{{ asset('js/bootbox/bootbox.min.js') }}"></script>
-<script src="{{ asset('js/usuarios-list.js') }}"></script>
+<script src="{{ asset('js/ordenes/ordenes-list.js') }}"></script>
 @stop

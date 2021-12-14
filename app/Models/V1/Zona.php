@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Zona extends Model
 {
     protected $table = 'tbl_zonas';
+
+    public function ordenes()
+    {
+        return $this->hasMany(Orden::class);
+    }
 }
