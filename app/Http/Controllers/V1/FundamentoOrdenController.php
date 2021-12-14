@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\V1\FundamentoOrden;
+use App\Models\v1\FundamentosOrden;
 use App\Models\V1\Orden;
 
 class FundamentoOrdenController extends Controller
@@ -25,14 +26,22 @@ class FundamentoOrdenController extends Controller
         //agregar un nuevo fundamento
         try{
             $newFundamento =  new FundamentoOrden;
-            $newFundamento->fundamento =  $request["fundamento"];
-            $newFundamento->url =  $request["url"];
+            $newFundamento->fundamento =  $request['fundamento'];
+            $newFundamento->url =  $request['url'];
             $newFundamento->save();
             $message = 'Almacenado con éxito';
-            return ['success' => true,'message' => $message];
+            $response = [
+                'success' => true,
+                'message' => $message,
+                'data'=> $newFundamento
+            ];
         } catch(\Exception $e){
-            return ['success' => false,'message' => $e->getMessage()];
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+        return response()->json($response);
     }
 
     public function addFundamentosOrden (Request $request){
@@ -46,6 +55,16 @@ class FundamentoOrdenController extends Controller
             return ['success' => true,'message' => $message];
         } catch(\Exception $e){
             return ['success' => false,'message' => $e->getMessage()];
+        }
+    }
+
+    public function getFundamentosByOrden($id){
+        //devolver los fundamentos de una orden
+        try{
+            $fundamentosOrden = FundamentosOrden::where('orden_id','=',$id);
+            return ['success' => true,'data' => $fundamentosOrden];
+        }catch(\Exception $e){
+            return ['success' => false,'data' => $e->getMessage()];
         }
     }
 }

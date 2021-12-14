@@ -1,7 +1,7 @@
 'use strict';
 
 var fundamentosSeleccionados = [];
-
+//formulario para crear un nuevo fundamento
 var handleValidation2 = function () {
 
     var handleValidation = function () {
@@ -21,8 +21,8 @@ var handleValidation2 = function () {
                 },
                 url: {
                     required: "Obligatorio",
-                    url: "Asegurese de ser una URL"
-                },
+                    url: "URL no válida"
+                }
             },
             rules: {
                 fundamento: {
@@ -31,7 +31,7 @@ var handleValidation2 = function () {
                 url: {
                     required: true,
                     url: true
-                },
+                }
             },
             invalidHandler: function (event, validator) {
                 success1.hide();
@@ -51,10 +51,9 @@ var handleValidation2 = function () {
 
             success: function (label, element) {
                 var icon = $(element).parent('.input-icon').children('i');
-                $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
                 icon.removeClass("fa-warning").addClass("fa-check");
             }
-
 
         });
     }
@@ -79,6 +78,7 @@ var handleValidation2 = function () {
                     bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
                         $("#formFundamentos")[0].reset();
                         $("#btnNewFundamento").removeAttr('disabled');
+                        //añadir el nuevo fundamento a la vista
                         fundamentos();
                         $("#añadirFundamento .close").click()
                     });
@@ -108,6 +108,24 @@ var handleValidation2 = function () {
 
 }();
 
+function fundamentosInit() {
+    $.ajax({
+        url: '/fundamentosOrdenes/getFundamentosByOrden/' + $('#id_orden').val(),
+        type: "GET",
+        dateType: 'json',
+        data: { sid: Math.random() }
+    })
+        .done(function (response) {
+            if (response.success == true) {
+                response.data.forEach(fundamento => {
+                    fundamentosSeleccionados.push(fundamento.ID);
+                });
+            } else
+                console.log(response)
+        }).fail(function (jqXHR, textStatus, error) {
+            console.log("Post error: " + error);
+        });
+}
 //obtener todos los fundamentos registrados
 function fundamentos() {
     $.ajax({
@@ -119,19 +137,25 @@ function fundamentos() {
         .done(function (response) {
             if (response.success == true) {
                 $('#modules').empty();
+                $('#dropzone').empty();
                 response.data.forEach(fundamento => {
-                    var $el = '<div class="drag drop-item " id="' + fundamento.id + '">' +
-                        '<div><span>' + fundamento.fundamento + '</span>' +
-                        '<p><a href="' + fundamento.url + '" class="text-secondary font-italic" target="_blank">' +
-                        fundamento.url + '</a></p>' +
-                        '</div> </div>';
-                    $('#modules').append($el);
+                    //crear elemento de con el fundamento
+                    addFundamento(fundamento);
                 });
                 iniciarDraggable();
             }
         }).fail(function (jqXHR, textStatus, error) {
             console.log("Post error: " + error);
         });
+}
+
+function addFundamento(fundamento) {
+    var $el = '<div class="drag drop-item " id="' + fundamento.id + '">' +
+        '<div><span>' + fundamento.fundamento + '</span>' +
+        '<p><a href="' + fundamento.url + '" class="text-secondary font-italic" target="_blank">' +
+        fundamento.url + '</a></p>' +
+        '</div> </div>';
+    $('#modules').append($el);
 }
 
 function iniciarDraggable() {
@@ -214,6 +238,7 @@ function SaveFundamentos() {
 $(document).ready(function () {
     handleValidation2.init();
     fundamentos();
+
 });
 
 

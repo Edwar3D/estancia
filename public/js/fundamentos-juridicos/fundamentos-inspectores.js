@@ -119,6 +119,7 @@ function fundamentos() {
         .done(function (response) {
             if (response.success == true) {
                 $('#modules').empty();
+                $('#dropzone').empty();
                 response.data.forEach(fundamento => {
                     var $el = '<div class="drag drop-item " id="' + fundamento.id + '">' +
                         '<div><span>' + fundamento.fundamento + '</span>' +

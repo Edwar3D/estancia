@@ -6,7 +6,6 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Models\V1\DocumentoOrden;
 use App\Models\V1\Orden;
-use App\Models\V1\TipoDocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,27 +15,23 @@ class DocumentoOrdenController extends Controller
     {
         try {
             if ($request->hasFile('file')) {
-
-                $path = $request->file('file')->storeAs('ordenes-documentos', $request->file('file')->getClientOriginalName(), 'public');
+                $orden = Orden::all();
+                $orden = $orden->last()->id;
+                //nombre del archivo orden_id+tipo_doc+nombreDoc
+                $path = $request->file('file')->storeAs('ordenes-documentos', $orden . $request["tipo"] . $request->file('file')->getClientOriginalName(), 'public');
                 //$storage = Storage::path('public\\'. $path );
 
                 $newDoc = new DocumentoOrden;
                 $newDoc->tipo_id = $request["tipo"];
                 $newDoc->url = $path;
-                $orden = Orden::all();
-                $orden = $orden->last()->id;
-
                 $newDoc->orden_id = $orden;
+
                 $newDoc->save();
-
-
-                $tiposDocumento = tipoDocumento::get();
-                $documentosSubidos = DocumentoOrden::where('orden_id', '=', $orden)->orderBy('tipo_id', 'DESC')->get();
 
                 return response()->json([
                     'success' => true,
                     'message' => 'Archivo almacenado con éxito',
-                    'HTML' => view('ordenes.add-documentos',compact('tiposDocumento','documentosSubidos'))->render()
+                    'data' => $newDoc->id
                 ]);
             } else {
                 return response()->json([
@@ -52,26 +47,34 @@ class DocumentoOrdenController extends Controller
         }
     }
 
-    public function index(Request $request)
+
+    public function destroy($id)
     {
-        $orden = Orden::find(4);
-        return $orden->pivot;
-    }
-    /*   public function store (Request $request){
-       try {
-            //code...
+        try {
+            $doc = DocumentoOrden::find($id);
+            Storage::delete('public/' . $doc->url);
+            $message = 'Archivo eliminado';
+            return [
+                'success' => true,
+                'message' => $message,
+            ];
         } catch (\Exception $e) {
-
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+    }
 
-         $path = null;
-        if($request->hasFile('file')){
-            $path = $request->file('file')->storeAs('ordenes-documentos', 'new.pdf', 'public');
+    public function show($id)
+    {
+        $doc = DocumentoOrden::find($id);
+        if (Storage::exists('public\\' . $doc->url)) {
+            $storage =  Storage::path('public\\' . $doc->url);
+            return response()->file($storage);
+        } else {
+            return response()
+                ->view('errors.404', 404);
         }
-        $storage = Storage::path('public\\'. $path );
-
-        return response()->file($storage);
-
-        return ['success'=> true, 'data'=>$request["file"]];
-    }*/
+    }
 }

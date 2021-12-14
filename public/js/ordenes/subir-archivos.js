@@ -1,17 +1,13 @@
 'use strict';
 
-
-
 var FormValidation = function () {
 
-
-
-    var handleValidation1 = function() {
-        $('.formFile').each( function(){
-            var form = $('#'+this.id);
+    var handleValidation1 = function () {
+        $('.formFile').each(function () {
+            //se valida cada input de la vista
+            var form = $(`#${this.id}`);
             var error1 = $('.alert-danger', this);
             var success1 = $('.alert-success', this);
-            console.log(this.id)
 
             form.validate({
                 errorElement: 'span',
@@ -39,7 +35,7 @@ var FormValidation = function () {
                 highlight: function (element, errorClass, validClass) {
                     $(element).addClass('is-invalid');
                 },
-                  unhighlight: function (element, errorClass, validClass) {
+                unhighlight: function (element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
                 },
 
@@ -50,7 +46,7 @@ var FormValidation = function () {
                 }
 
             });
-        } )
+        })
     }
 
     return {
@@ -58,76 +54,78 @@ var FormValidation = function () {
         init: function () {
             handleValidation1();
         }
-
     };
 
 }();
 
-function upload (id) {
+function upload(id) {
     var formOpciones = {
-        beforeSubmit: function()
-        {
-            if(!$('#formFile'+id).valid())
-            {
+        beforeSubmit: function () {
+            if (!$(`#formFile${id}`).valid()) {
                 bootbox.alert("<strong>Cometio un error.</strong><br><br><pre>Verifique la información y vuelva a intentarlo.</pre>");
                 return false;
             }
             else {
-                $("#btnUpload"+id).attr('disabled', 'true');
+                $(`#btnUpload${id}`).attr('disabled', 'true');
 
-                $("#spinner"+id).attr('hidden',false);
+                $(`#spinner${id}`).attr('hidden', false);
             }
         },
-        url:  url_route+"/subirAchivo",
+        url: url_route + "/subirAchivo",
         type: 'post',
-        data: $('#formFile'+id).serialize(),
-        success: function(response)
-        {
+        data: $(`#formFile${id}`).serialize(),
+        success: function (response) {
             console.log(response);
-            $("#btnUpload"+id).removeAttr('disabled');
-            $("#spinner"+id).attr('hidden',true);
-            if(response.success==true)
-            {
-                 bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>"+response.message+"</pre>", function(){
-                    $("#btnUpload"+id).attr('hidden',true);
-                    $("#btnDelete"+id).attr('hidden',false);
-                    $("#content-add-doc").append(response.HTML);
+            $(`#btnUpload${id}`).removeAttr('disabled');
+            $(`#spinner${id}`).attr('hidden', true);
+            if (response.success == true) {
+                bootbox.alert("<strong>Mensaje del Sistema</strong><br><br><pre>" + response.message + "</pre>", function () {
+                    $(`#inputFile${id}`).attr('hidden', true);
+                    $(`#file${id}`).attr('hidden', false);
+                    $(`#view${id}`).attr("href", `/subirAchivo/${response.data}`);
+                    $(`#delete${id}`).attr('onClick', `deleteFile(${response.data},${id})`);
                 });
 
-            }else
-            {
-                bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>"+response.message+"</pre>");
+            } else {
+                bootbox.alert("<strong>Ocurrio un error.</strong><br><br><pre>" + response.message + "</pre>");
             }
         },
-        timeout:60000,
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            $("#btnUpload"+id).removeAttr('disabled');
-            $("#spinner"+id).attr('hidden',true);
-            bootbox.alert("<strong>Ocurrio un error de Network. Intentalo de nuevo.</strong><br><br><pre>"+errorThrown+"</pre>");
+        timeout: 60000,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(`#btnUpload${id}`).removeAttr('disabled');
+            $(`#spinner${id}`).attr('hidden', true);
+            bootbox.alert("<strong>Ocurrio un error de Network. Intentalo de nuevo.</strong><br><br><pre>" + errorThrown + "</pre>");
         }
     };
 
-    $('#formFile'+id).ajaxForm(formOpciones);
+    $(`#formFile${id}`).ajaxForm(formOpciones);
 }
 
-$(document).ready(function(){
+
+function deleteFile(id, tipo_id) {
+    $.ajax({
+        url: url_route + "/subirAchivo/" + id,
+        type: "delete",
+        dateType: 'json',
+        data: {}
+    })
+        .done(function (response) {
+            if (response.success == true) {
+                console.log(response);
+                bootbox.alert("<strong>Archivo eliminado</strong><br><br><pre>" + response.message + "</pre>", function () {
+                    $(`#inputFile${tipo_id}`).trigger("reset");
+                    $(`#inputFile${tipo_id}`).attr('hidden', false);
+                    $(`#file${tipo_id}`).attr('hidden', true);
+                });
+            }else{
+                bootbox.alert("<strong>Ocurrio un erro</strong><br><br><pre>" + response.message + "</pre>");
+            }
+        }).fail(function (jqXHR, textStatus, error) {
+            bootbox.alert("<strong>>Ocurrio un error de Network. Intentalo de nuevo.</strong><br><br><pre>" +  errorThrown + "</pre>");
+        });
+}
+
+$(document).ready(function () {
     FormValidation.init();
-    console.log("id",$('#id_orden').val())
-     $.ajax({
-                url:'/ordenes/create',
-                type: "GET",
-                dateType:'json',
-                data:{
-                    "request": {
-                        "id_orden": $('#id_orden').val(),
-                    }
-                }
-            })
-            .done(function(response){
-                if(response.success==true){
-                    $("#content-add-doc").html(response.HTML);
-                }
-            }).fail(function (jqXHR, textStatus, error) {
-                console.log("Post error: " + error);
-            });
+
 });

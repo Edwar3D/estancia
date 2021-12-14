@@ -4,7 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\v1\FundamentoInspector;
+use App\Models\v1\FundamentosInspector;
 use App\Models\V1\FundamentoJuridico;
 use App\Models\V1\Inspector;
 
@@ -23,12 +23,12 @@ class FundamentoInspectorController extends Controller
     public function getByInspector($id){
         //devolver los fundamentos de un inspector
         try{
-            $fundamentosInspector = FundamentoInspector::select('fundamento_id as ID')->where('inspector_id','=',$id)->get();
+            $fundamentosInspector = FundamentosInspector::select('fundamento_id as ID')->where('inspector_id','=',$id)->get();
             return ['success' => true,'data' => $fundamentosInspector];
         }catch(\Exception $e){
             return ['success' => false,'data' => $e->getMessage()];
         }
-       
+
     }
 
     public function store (Request $request){

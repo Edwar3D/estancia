@@ -22,6 +22,7 @@ class OrdenController extends Controller
      */
     public function index()
     {
+        $ordenes =  Orden::where('dependencia_id','=',Auth::user()->id)->orderBy('fecha', 'DESC')->get();
         return view('ordenes.list');
     }
 
@@ -38,7 +39,7 @@ class OrdenController extends Controller
         $tiposDocumento = tipoDocumento::get();
 
         if (isset($request["request"]['id_orden']))
-            $documentosSubidos = DocumentoOrden::where('orden_id', '=', $request['request']['id_orden'])->orderBy('tipo_id', 'DESC')->get();
+            $documentosSubidos = DocumentoOrden::where('orden_id', '=', $request['request']['id_orden'])->get();
         else
             $documentosSubidos = [];
         //dd($request->all());
